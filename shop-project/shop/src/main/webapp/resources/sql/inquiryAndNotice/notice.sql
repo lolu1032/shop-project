@@ -1,0 +1,12 @@
+-- 공지사항 테이블
+CREATE TABLE IF NOT EXISTS `shop`.`notice` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(100) NOT NULL,
+  `content` VARCHAR(255) NOT NULL,
+  `createDay` DATETIME NULL DEFAULT NULL,
+  `img` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+

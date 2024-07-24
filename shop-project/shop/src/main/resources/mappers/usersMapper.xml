@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dong.usersMapper">
+	<insert id="insertUsers" parameterType="kr.co.dong.domain.UsersEntity">
+		insert into users(login,pw,name,number,email,joinDay) 
+		values (#{login},#{pw},#{name},#{number},#{email},now())
+	</insert>
+	<!-- 있다면 1 없다면 0 나올걸 이용 -->
+	<!-- count이기때문에 java.lang.Integer로 타입을 했어야했는데 kr.co.dong.domain.UserEntity로 해서
+	값이 int값이 아닌 UserEntity로 들어가니까 계속 NullPointerException이 나온거였다 -->
+	<select id="checkId" resultType="java.lang.Integer">
+		select count(*) from users
+		where login = #{login}
+	</select>
+	
+	<select id="sucess" resultType="kr.co.dong.domain.UsersEntity">
+		select login,pw,name from users
+		where login = #{login} and pw = #{pw}
+	</select>
+	
+</mapper>
