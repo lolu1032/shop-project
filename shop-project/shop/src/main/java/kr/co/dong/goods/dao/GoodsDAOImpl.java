@@ -1,6 +1,7 @@
 package kr.co.dong.goods.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,8 @@ public class GoodsDAOImpl implements GoodsDAO{
 		return sqlSession.selectList("kr.co.dong.goodsMapper.goodsPageImg",id);
 	}
 	@Override
-	public int InsertCarts(String id) {
+	public int InsertCart(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("kr.co.dong.goodsMapper.insertCarts",id);
+		return sqlSession.insert("kr.co.dong.goodsMapper.insertCarts",map);
 	}
 }

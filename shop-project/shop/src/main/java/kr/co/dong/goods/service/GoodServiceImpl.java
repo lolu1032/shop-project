@@ -1,6 +1,7 @@
 package kr.co.dong.goods.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ public class GoodServiceImpl implements GoodsService{
 		return goodsDAO.imgsList(id);
 	}
 	@Override
-	public int insertCarts(String id) {
+	public int insertCart(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return goodsDAO.InsertCarts(id);
+		return goodsDAO.InsertCart(map);
 	}
 }

@@ -1,7 +1,11 @@
 package kr.co.dong.goods.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,8 +35,6 @@ public class GoodsController {
 		model.addAttribute("list", ge);
 		List<ImgsEntity> imgs = service.imgsList(id);
 		model.addAttribute("imgs", imgs);
-		int carts = service.insertCarts(id);
-		model.addAttribute("carts",carts);
 		return "goods";
 	}
 	@GetMapping(value = "outer")

@@ -1,6 +1,7 @@
 package kr.co.dong.goods.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.dong.domain.CartsEntity;
 import kr.co.dong.domain.GoodsEntity;
@@ -14,6 +15,6 @@ public interface GoodsDAO {
 	public GoodsEntity goodsPage(String id);
 	// 상품 색상별 이미지
 	public List<ImgsEntity> imgsList(String id);
-	// 장바구니 추가
-	public int InsertCarts(String id);
+	// 비회원 장바구니
+	public int InsertCart(Map<String, Object> map);
 }

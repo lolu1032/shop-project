@@ -23,8 +23,7 @@
 		where refer_id = #{refer_id}
 	</select>
 	<!-- 장바구니 클릭시 insert -->
-	<insert id="insertCarts" parameterType="java.lang.String">
-		insert into cart (goods_id) values(#{goods_id})
-		<!--  -->
+	<insert id="insertCarts" parameterType="java.util.Map">
+		insert into cart (goods_id,users_id) values(#{goods_id},#{users_id})	
 	</insert>
 </mapper>

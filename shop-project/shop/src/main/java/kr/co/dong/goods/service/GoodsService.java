@@ -1,6 +1,7 @@
 package kr.co.dong.goods.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.co.dong.domain.CartsEntity;
 import kr.co.dong.domain.GoodsEntity;
@@ -14,6 +15,6 @@ public interface GoodsService {
 	public GoodsEntity goodsPage(String id);
 	// 색상별 상품이미지
 	public List<ImgsEntity> imgsList(String id);
-	// 장바구니 추가
-	public int insertCarts(String id);
+	// 비회원 장바구니 넣을때
+	public int insertCart(Map<String, Object> map);
 }

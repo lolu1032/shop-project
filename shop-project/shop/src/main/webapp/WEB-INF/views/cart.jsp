@@ -84,7 +84,8 @@
 									<p class="mb-0 me-5 d-flex align-items-center">
 										<span class="small text-muted me-2">Order total:</span>
 										<!-- 이쪽 부근은 상품의 총 가격을 넣기 -->
-										<spanclass ="leadfw-normal">$799</span>
+										<spanclass ="leadfw-normal"></spanclass>$79</span>
+										div
 									</p>
 								</div>
 
