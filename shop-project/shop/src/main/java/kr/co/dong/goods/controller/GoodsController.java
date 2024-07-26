@@ -57,8 +57,22 @@ public class GoodsController {
 	}
 
 	@GetMapping(value = "cart")
-	public String cart() {
-        return "cart";
+	public List<GoodsEntity> cart(HttpServletRequest request,Model model) {
+	    HttpSession session = request.getSession(false);
+	    Map<String, Object> carts = new HashMap<String,Object>();
+	    
+	    String username;
+	    if (session == null) {
+	        username = session.getId();
+	    } else {
+	        username = (String) session.getAttribute("login");
+	        if (username == null) {
+	            username = session.getId();
+	        }
+	    }
+		List<GoodsEntity> cartList =  service.cartsList(username);
+		 model.addAttribute("cart",cartList);
+        return cartList;
 	}
 
 	@PostMapping(value = "cart")

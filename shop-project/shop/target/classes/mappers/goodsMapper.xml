@@ -36,4 +36,9 @@
 		join img on img.refer_id = goods_id	
 		where username = #{username} 
 	</select>
+	<!-- 비회원 -> 회원 로그인시 -->
+	<update id="updateCartUsername">
+		update cart
+		set username = #username;
+	</update>
 </mapper>

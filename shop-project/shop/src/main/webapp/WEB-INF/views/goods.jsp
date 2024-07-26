@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page session="true"%>
 <html>
 <head>
@@ -69,7 +70,9 @@
 							<option value="3">Three</option>
 						</select>
 					</div>
-					<div class="page_price">${list.price }원</div>
+					<div class="page_price">
+						<fmt:formatNumber value="${list.price }" type="number" groupingUsed="true" /> 원
+					</div>
 					<div class="btn-container">
 						<div class="btn-group">
 							<form action="${contextPath}/cart" method="post" class="btn-form">
