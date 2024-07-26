@@ -8,10 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+ <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="${contextPath }/resources/css/style.css">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script

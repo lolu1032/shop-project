@@ -16,5 +16,7 @@ public interface GoodsDAO {
 	// 상품 색상별 이미지
 	public List<ImgsEntity> imgsList(String id);
 	// 비회원 장바구니
-	public int InsertCart(Map<String, Object> map);
+	public int insertCart(Map<String, Object> map);
+	// 장바구니 리스트
+	public List<GoodsEntity> cartList(String username);
 }

@@ -4,4 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<!-- 안에는 비어있지만 이파일을 만들어야 마이바티스 움직임 -->
+	<!--  <typeAliases>
+		<typeAlias type="kr.co.dong.domain" alias="domain"/>
+	</typeAliases>-->
 </configuration>

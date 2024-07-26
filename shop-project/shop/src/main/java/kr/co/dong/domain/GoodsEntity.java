@@ -12,9 +12,17 @@ public class GoodsEntity {
 	private int id;
 //	브랜드
 	private String brandName;
-
+// 	카트 유저네임
+	private String username;
 	
 	
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public String getBrandName() {
 		return brandName;
 	}

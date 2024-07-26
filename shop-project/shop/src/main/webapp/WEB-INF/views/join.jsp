@@ -6,7 +6,6 @@
 <html>
 <head>
 <title>Home</title>
- <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 <body>
 	<div id="wrap">
@@ -64,28 +63,30 @@
 </body>
 <script>
 $('#id').focusout(function() {
-	let id = $('#id').val();
-	
-	$.ajax({
-		url : "joinForm",
-		type : "POST",
-		data : {id:id},
-		dataType : "json",
-		success : function(result) {
-			 let resultInt = parseInt(result, 10);
-			if(resultInt == 0) {
-				$("#check").html('사용할 수 있는 아이디입니다.');
-				$("#check").css('color','green');
-			}else {
-				$("#check").html('사용할 수 없는 아이디입니다.');
-				$("#check").css('color','red');
-			}
-		},
-		error : function() {
-			alert("서버요청실패");
-		}
-	})
-})
+    let id = $('#id').val();
+
+    $.ajax({
+        url: "joinForm",
+        type: "POST",
+        data: { id: id },
+        dataType: "json",
+        success: function(result) {
+            let resultInt = parseInt(result, 10);
+            if (resultInt == 0) {
+                $("#check").html('사용할 수 있는 아이디입니다.');
+                $("#check").css('color', 'green');
+            } else {
+                $("#check").html('사용할 수 없는 아이디입니다.');
+                $("#check").css('color', 'red');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+            console.error("Response:", xhr.responseText);
+            alert("서버요청실패");
+        }
+    });
+});
 	function check(event) {
 		// form의 새로고침을 방지하기위해 event.preventDefault사용
 		event.preventDefault();

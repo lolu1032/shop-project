@@ -98,11 +98,13 @@ public class UsersController {
 
 		UsersEntity sucess = service.success(ue);
 		if (sucess == null) {
+			model.addAttribute("error", "아이디 또는 비밀번호가 틀렸습니다.");
 			return "login";
 		} else {
 			HttpSession session = request.getSession();
 			session.setAttribute("user", sucess);
 			session.setAttribute("username", sucess.getName());
+			session.setAttribute("login", sucess.getLogin());
 			return "redirect:/";
 		}
 	}

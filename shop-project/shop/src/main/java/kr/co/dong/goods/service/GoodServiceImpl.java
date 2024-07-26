@@ -34,6 +34,11 @@ public class GoodServiceImpl implements GoodsService{
 	@Override
 	public int insertCart(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return goodsDAO.InsertCart(map);
+		return goodsDAO.insertCart(map);
+	}
+	@Override
+	public List<GoodsEntity> cartsList(String username) {
+		// TODO Auto-generated method stub
+		return goodsDAO.cartList(username);
 	}
 }

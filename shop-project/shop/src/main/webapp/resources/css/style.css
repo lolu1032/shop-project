@@ -622,3 +622,66 @@ input[type="button"] {
     background-size: 100%, 100%;
     background-image: none;
 }
+
+
+/* 버튼 컨테이너 스타일 */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* 버튼 그룹 스타일 */
+.btn-group {
+    display: flex;
+    width: 100%;
+    max-width: 600px; /* 버튼 그룹의 최대 너비 설정 */
+    gap: 10px; /* 버튼 간의 간격 설정 */
+}
+
+/* 버튼 폼 스타일 */
+.btn-form {
+    flex: 1; /* 버튼이 동일한 비율로 확장되도록 설정 */
+    margin: 0;
+}
+
+/* 버튼 공통 스타일 */
+.btn {
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    padding: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    width: 100%; /* 버튼이 부모 컨테이너의 너비를 모두 차지하도록 설정 */
+    box-sizing: border-box; /* 패딩과 테두리가 너비에 포함되도록 설정 */
+}
+
+/* 장바구니 버튼 스타일 */
+.btn-cart {
+    background-color: #007bff; /* 파란색 배경 */
+}
+
+.btn-cart:hover {
+    background-color: #0056b3; /* 호버 시 어두운 파란색 */
+}
+
+.btn-cart:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); /* 포커스 시 그림자 효과 */
+}
+
+/* 구매하기 버튼 스타일 */
+.btn-checkout {
+    background-color: #28a745; /* 녹색 배경 */
+}
+
+.btn-checkout:hover {
+    background-color: #218838; /* 호버 시 어두운 녹색 */
+}
+
+.btn-checkout:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(72, 182, 94, 0.5); /* 포커스 시 그림자 효과 */
+}

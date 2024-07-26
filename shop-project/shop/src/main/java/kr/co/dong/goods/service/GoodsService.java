@@ -17,4 +17,6 @@ public interface GoodsService {
 	public List<ImgsEntity> imgsList(String id);
 	// 비회원 장바구니 넣을때
 	public int insertCart(Map<String, Object> map);
+	// 카트 리스트
+	public List<GoodsEntity> cartsList(String username);
 }

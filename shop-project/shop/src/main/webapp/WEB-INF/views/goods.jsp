@@ -6,10 +6,14 @@
 <head>
 
 </head>
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+	rel="stylesheet">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <body>
 	<div id="wrap">
 		<c:choose>
@@ -66,9 +70,17 @@
 						</select>
 					</div>
 					<div class="page_price">${list.price }원</div>
-					<div class="btn">
-						<input type="button" value="구매하기" name=""> 
-						<input type="button" value="장바구니" name ="cart" onclick="location.href='${contextPath}/cart'">
+					<div class="btn-container">
+						<div class="btn-group">
+							<form action="${contextPath}/cart" method="post" class="btn-form">
+								<input type="hidden" name="goodsId" value="${list.id}">
+								<input type="submit" value="장바구니" class="btn btn-cart">
+							</form>
+							<form action="${contextPath}/checkout" method="post"
+								class="btn-form">
+								<input type="submit" value="구매하기" class="btn btn-checkout">
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
