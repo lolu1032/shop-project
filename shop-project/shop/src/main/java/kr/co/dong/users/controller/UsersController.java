@@ -30,8 +30,12 @@ public class UsersController {
 	@Autowired
 	private UsersService service;
 
+	@GetMapping(value = "join")
+	public String join() {
+		return "join";
+	}
 	@PostMapping(value = "join")
-	public String join_insert(@RequestParam("id") String id, @RequestParam("password") String password,
+	public String insertJoin(@RequestParam("id") String id, @RequestParam("password") String password,
 			@RequestParam("confirm_password") String confirm_password, @RequestParam("name") String name,
 			@RequestParam("phone") String phone, @RequestParam("email") String email, Model model) {
 

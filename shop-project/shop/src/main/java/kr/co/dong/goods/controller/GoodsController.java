@@ -25,14 +25,6 @@ public class GoodsController {
 	@Autowired
 	private GoodsService service;
 
-	@GetMapping(value = "main")
-	public void main() {
-
-//		List<ImgEntity> list = service.list();
-////		System.out.println("Goods List: " + list); // 디버깅용 로그
-//		model.put("list", list);
-	}
-
 	@GetMapping(value = "goods/{id}")
 	public String goods(@PathVariable("id") String id, Model model) {
 		GoodsEntity ge = service.goodsPage(id);
@@ -51,29 +43,30 @@ public class GoodsController {
 		return mv;
 	}
 
-	@GetMapping(value = "join")
-	public String join() {
-		return "join";
-	}
-
 	@GetMapping(value = "cart")
 	public List<GoodsEntity> cart(HttpServletRequest request,Model model) {
 	    HttpSession session = request.getSession(false);
 	    Map<String, Object> carts = new HashMap<String,Object>();
-	    
+	    Map<String, Object> log = new HashMap<String, Object>();
 	    String username;
+	    String old = null;
 	    if (session == null) {
-	        username = session.getId();
+	        username = "Guest-" + System.currentTimeMillis();
 	    } else {
+	    	old = session.getId();
 	        username = (String) session.getAttribute("login");
 	        if (username == null) {
-	            username = session.getId();
+	            username = old;
 	        }
+	        log.put("oldUsername", old);
 	    }
+	    log.put("username", username);
+	    service.updateCartsUsername(log);
 		List<GoodsEntity> cartList =  service.cartsList(username);
 		 model.addAttribute("cart",cartList);
         return cartList;
 	}
+
 
 	@PostMapping(value = "cart")
 	public String insertCart(@RequestParam("goodsId") String goodsId, HttpServletRequest request,Model model) {
@@ -85,18 +78,17 @@ public class GoodsController {
 	    
 	    String username;
 	    if (session == null) {
-	        username = session.getId();
+	        username = "Guest-" + System.currentTimeMillis();
 	    } else {
 	        username = (String) session.getAttribute("login");
 	        if (username == null) {
 	            username = session.getId();
 	        }
 	    }
-
+	    
 	    carts.put("goods_id", goodsId);
 	    carts.put("username", username);
-//	    System.out.println("username : " + username);
-
+	    
 	    // 서비스 호출
 	    service.insertCart(carts);
 	    List<GoodsEntity> cartList =  service.cartsList(username);

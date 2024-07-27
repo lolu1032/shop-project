@@ -19,4 +19,6 @@ public interface GoodsService {
 	public int insertCart(Map<String, Object> map);
 	// 카트 리스트
 	public List<GoodsEntity> cartsList(String username);
+	// 장바구니 비회원 -> 회원
+	public int updateCartsUsername(Map<String, Object> map);
 }

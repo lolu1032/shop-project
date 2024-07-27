@@ -36,9 +36,11 @@
 		join img on img.refer_id = goods_id	
 		where username = #{username} 
 	</select>
-	<!-- 비회원 -> 회원 로그인시 -->
-	<update id="updateCartUsername">
+	
+		<!-- 비회원 -> 회원 로그인시 -->
+	<update id="updateCartUsername" parameterType="java.util.Map">
 		update cart
-		set username = #username;
+		set username = #{username}
+		where username = #{oldUsername}
 	</update>
 </mapper>

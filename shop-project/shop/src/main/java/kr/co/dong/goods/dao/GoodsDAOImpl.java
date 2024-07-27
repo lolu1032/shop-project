@@ -39,4 +39,9 @@ public class GoodsDAOImpl implements GoodsDAO{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kr.co.dong.goodsMapper.cartsList",username);
 	}
+	@Override
+	public int updateCartsUsername(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("kr.co.dong.goodsMapper.updateCartUsername", map);
+	}
 }
