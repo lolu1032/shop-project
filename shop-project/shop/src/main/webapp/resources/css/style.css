@@ -685,3 +685,6 @@ input[type="button"] {
     outline: none;
     box-shadow: 0 0 0 3px rgba(72, 182, 94, 0.5); /* 포커스 시 그림자 효과 */
 }
+.h-100 {
+	width: 100%;
+}

@@ -1,10 +1,21 @@
 package kr.co.dong.domain;
 
 public class CartsEntity {
+	private int id;
+
 	// 카트 상품아이디 외래키
 	private String goods_id;
 	private String username;
 
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getUsername() {
 		return username;
 	}

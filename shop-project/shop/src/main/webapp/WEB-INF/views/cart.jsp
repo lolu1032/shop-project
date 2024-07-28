@@ -56,7 +56,9 @@
 											</h5>
 										</div>
 										<div class="col-md-1 col-lg-1 col-xl-1 text-end">
-											<a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+											<a href="delete?id=${cart.id}&cartsId=${cart.cartsId}" class="text-danger" >
+												<i class="fa-solid fa-trash"></i>
+											</a>
 										</div>
 									</div>
 								</div>
@@ -75,7 +77,6 @@
 										</span>
 									</p>
 								</div>
-<!--  leadfw-normal -->
 							</div>
 						</div>
 						<!-- 여기가 끝단 -->
@@ -84,7 +85,7 @@
 								class="btn btn-light btn-lg me-2"
 								onclick="location.href='${contextPath}'">계속 쇼핑하기</button>
 							<button type="button" data-mdb-button-init data-mdb-ripple-init
-								class="btn btn-primary btn-lg">구매하기</button>
+								class="btn btn-primary btn-lg" onclick="location.href='${contextPath}/payment'">구매하기</button>
 						</div>
 
 					</div>

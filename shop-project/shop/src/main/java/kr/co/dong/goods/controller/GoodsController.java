@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import kr.co.dong.domain.CartsEntity;
 import kr.co.dong.domain.GoodsEntity;
 import kr.co.dong.domain.ImgsEntity;
 import kr.co.dong.goods.service.GoodsService;
@@ -43,7 +44,7 @@ public class GoodsController {
 		return mv;
 	}
 
-	@GetMapping(value = "cart")
+	@GetMapping(value = {"cart","payment"})
 	public List<GoodsEntity> cart(HttpServletRequest request,Model model) {
 	    HttpSession session = request.getSession(false);
 	    Map<String, Object> carts = new HashMap<String,Object>();
@@ -68,7 +69,7 @@ public class GoodsController {
 	}
 
 
-	@PostMapping(value = "cart")
+	@PostMapping(value = {"cart","payment"})
 	public String insertCart(@RequestParam("goodsId") String goodsId, HttpServletRequest request,Model model) {
 	    // 서버 로그에 goodsId 확인
 //	    System.out.println("goodsId: " + goodsId);
@@ -93,6 +94,21 @@ public class GoodsController {
 	    service.insertCart(carts);
 	    List<GoodsEntity> cartList =  service.cartsList(username);
 	    model.addAttribute("cart",cartList);
-	    return "cart";
+
+	    String requestURI = request.getRequestURI();
+	    if (requestURI.contains("payment")) {
+	        return "payment";
+	    } else {
+	        return "cart";
+	    }
+	}
+	
+	@GetMapping(value="delete")
+	public String deleteCartsList(@RequestParam("id") String goodsId, @RequestParam("cartsId") String cartsId) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("goods_id", goodsId);
+		map.put("cartsId", cartsId);
+		service.deleteCartsList(map);
+		return "redirect:/cart";
 	}
 }

@@ -14,9 +14,16 @@ public class GoodsEntity {
 	private String brandName;
 // 	카트 유저네임
 	private String username;
+	private int cartsId;
 	
 	
 	
+	public int getCartsId() {
+		return cartsId;
+	}
+	public void setCartsId(int cartsId) {
+		this.cartsId = cartsId;
+	}
 	public String getUsername() {
 		return username;
 	}

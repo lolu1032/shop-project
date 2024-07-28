@@ -79,8 +79,9 @@
 								<input type="hidden" name="goodsId" value="${list.id}">
 								<input type="submit" value="장바구니" class="btn btn-cart">
 							</form>
-							<form action="${contextPath}/checkout" method="post"
+							<form action="${contextPath}/payment" method="post"
 								class="btn-form">
+								<input type="hidden" name="goodsId" value="${list.id}">
 								<input type="submit" value="구매하기" class="btn btn-checkout">
 							</form>
 						</div>
