@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> <!-- 숫자 100,000단위로 끊기위해 추가 -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<!-- 숫자 100,000단위로 끊기위해 추가 -->
 <%@ page session="true"%>
 <html>
 <head>
@@ -33,8 +34,7 @@
 							<!-- 여기서부터 c:foreach쓰면 될거같음 -->
 
 							<c:forEach items="${cart }" var="cart">
-										<c:set var="total" value="${total + cart.price }" />
-
+								<c:set var="total" value="${total + cart.price*cart.count }" />
 								<div class="card-body p-4">
 									<div
 										class="row d-flex justify-content-between align-items-center">
@@ -49,21 +49,24 @@
 											<!-- 색깔 -->
 											</span>M <span class="text-muted">${cart.colorType } </span>
 										</div>
-										<div class="col-md-3 col-lg-3 col-xl-2 d-flex">개수</div>
+										<div class="col-md-3 col-lg-3 col-xl-2 d-flex">${cart.count }
+											개</div>
 										<div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
 											<h5 class="mb-0">
-												<fmt:formatNumber value="${cart.price }" type="number" groupingUsed="true" />원
+												<fmt:formatNumber value="${cart.price }" type="number"
+													groupingUsed="true" />
+												원
 											</h5>
 										</div>
 										<div class="col-md-1 col-lg-1 col-xl-1 text-end">
-											<a href="delete?id=${cart.id}&cartsId=${cart.cartsId}" class="text-danger" >
+											<a href="delete?cartsId=${cart.cartsId}" class="text-danger">
 												<i class="fa-solid fa-trash"></i>
 											</a>
 										</div>
 									</div>
 								</div>
 								<!-- foreach끝단 -->
-						</c:forEach>
+							</c:forEach>
 						</div>
 
 						<div class="card mb-5">
@@ -73,8 +76,9 @@
 									<p class="mb-0 me-5 d-flex align-items-center">
 										<span class="small text-muted me-2">총가격 : </span>
 										<!-- 이쪽 부근은 상품의 총 가격을 넣기 -->
-										<fmt:formatNumber value="${total }" type="number" groupingUsed="true" />원
-										</span>
+										<fmt:formatNumber value="${total }" type="number"
+											groupingUsed="true" />
+										원 </span>
 									</p>
 								</div>
 							</div>
@@ -85,7 +89,8 @@
 								class="btn btn-light btn-lg me-2"
 								onclick="location.href='${contextPath}'">계속 쇼핑하기</button>
 							<button type="button" data-mdb-button-init data-mdb-ripple-init
-								class="btn btn-primary btn-lg" onclick="location.href='${contextPath}/payment'">구매하기</button>
+								class="btn btn-primary btn-lg"
+								onclick="location.href='${contextPath}/payment'">구매하기</button>
 						</div>
 
 					</div>
