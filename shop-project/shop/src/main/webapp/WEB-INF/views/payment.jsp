@@ -116,12 +116,6 @@
 										class="form-control" value="" />
 								</div>
 							</div>
-							<!-- 주소부분 다음 주소api로 날릴예정 -->
-							<input type="text" id="sample6_postcode" placeholder="우편번호">
-							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br> 
-							<input type="text" id="sample6_address" placeholder="주소"><br> 
-							<input type="text" id="sample6_detailAddress" placeholder="상세주소">
-							<input type="text" id="sample6_extraAddress" placeholder="참고항목">
 							<!-- 끝단 -->
 							<div class="form-group">
 								<div class="col-md-12">
@@ -142,24 +136,31 @@
 								</div>
 							</div>
 						</div>
+							<input type="text"  id="sample6_postcode" placeholder="우편번호">
+							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br> 
+							<input type="text" id="sample6_address" placeholder="주소"><br> 
+							<input type="text"  id="sample6_detailAddress" placeholder="상세주소">
+							<input type="text" id="sample6_extraAddress" placeholder="참고항목">
 					</div>
 					<div class="panel panel-info">
 						<div class="panel-heading">
-							<span><i class="glyphicon glyphicon-lock"></i></span> Secure
-							Payment
+							<span>
+								<div class="panel-name">결제방법</div>
+							</span> 
 						</div>
 						<!-- 결제 부근 포트원 쓸 예정 첫단 -->
 						<div class="form-group">
 							<div class="col-md-12">
-								<strong class="payment-title">결제 방법 :</strong> 
-								<label><input type="radio" name="payment_method" value="kakaopay" checked>카카오페이</label> 
-								<label> <input type="radio" name="payment_method" value="tosspay">토스페이</label>
-								<label><input type="radio" name="payment_method" value="payco">페이코</label>
-								<label><input type="radio" name="payment_method" value="smilpay">스마일페이</label>
-								<label><input type="radio" name="payment_method" value="daou">키움페이</label>
+								<label class="pay"><input type="radio" name="payment_method" value="kakaopay" checked> 카카오페이</label> 
+								<label class="pay"> <input type="radio" name="payment_method" value="tosspay"> 토스페이</label>
+								<label class="pay"><input type="radio" name="payment_method" value="payco"> 페이코</label>
+								<label class="pay"><input type="radio" name="payment_method" value="smilpay"> 스마일페이</label>
+								<label class="pay"><input type="radio" name="payment_method" value="daou"> 키움페이</label>
 							</div>
 						</div>
-						<button onclick="onClickPay()">결제하기</button>
+						<div class="btn">
+							<button class="pay-btn" onclick="onClickPay()">결제하기</button>
+						</div>
 					</div>
 				</div>
 				<!--결제 끝단-->
@@ -184,14 +185,15 @@ const onClickPay = async () => {
     IMP.request_pay({
         pg: paymentMethod, // 선택된 결제 방법
         pay_method: 'card', // 결제 방법
-        merchant_uid: "order_no_0001", // 주문 번호
+//         merchant_uid: uniqueOrderNumber, // 유니크한 주문 번호 삭제하니 해결`
         name: '주문명:결제테스트',
-        amount: parseFloat(${total}), // 총 금액
+        amount: 100, // 총 금액parseFloat(${total})
+        m_redirect_url : 'http://localhost:8080/dong'
     }, function (rsp) {
         if (rsp.success) {
             // [1] 서버단에서 결제정보 조회를 위해 imp_uid 전달하기
             jQuery.ajax({
-                url: "/payments/complete", // 서버의 결제 확인 엔드포인트
+                url: "payment", // 서버의 결제 확인 엔드포인트
                 type: 'POST',
                 dataType: 'json',
                 contentType: 'application/json',
@@ -202,14 +204,7 @@ const onClickPay = async () => {
             }).done(function(data) {
                 // [2] 서버에서 REST API로 결제정보 확인 및 서비스 루틴이 정상적인 경우
                 if (data.success) {
-                    var msg = '결제가 완료되었습니다.';
-                    msg += '\n고유ID : ' + rsp.imp_uid;
-                    msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-                    msg += '\n결제 금액 : ' + rsp.paid_amount;
-                    msg += '\n카드 승인번호 : ' + rsp.apply_num;
-
-                    alert(msg);
-                    window.location.href = '${contextPath}/thankyou'; // 결제 완료 후 이동할 페이지
+                	window.location.href = 'http://localhost:8080/dong';
                 } else {
                     // [3] 아직 제대로 결제가 되지 않았습니다.
                     // [4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소 처리하였습니다.
