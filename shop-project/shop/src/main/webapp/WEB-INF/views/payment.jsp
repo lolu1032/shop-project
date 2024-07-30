@@ -107,23 +107,23 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-6 col-xs-12">
-									<strong>성 : </strong> <input type="text" name="first_name"
-										class="form-control" value="" />
+									<strong>성 : </strong> <input type="text" id="first_name"
+										name="first_name" class="form-control" placeholder="성" />
 								</div>
 								<div class="span1"></div>
 								<div class="col-md-6 col-xs-12">
-									<strong>이름 : </strong> <input type="text" name="last_name"
-										class="form-control" value="" />
+									<strong>이름 : </strong> <input type="text" id="last_name"
+										name="last_name" class="form-control" placeholder="이름" />
 								</div>
 							</div>
 							<!-- 끝단 -->
 							<div class="form-group">
 								<div class="col-md-12">
-									<strong>전화번호 :</strong>
+									<strong>전화번호 : </strong>
 								</div>
 								<div class="col-md-12">
-									<input type="text" name="phone_number" class="form-control"
-										value="" />
+									<input type="text" id="phone_number" name="phone_number"
+										class="form-control" placeholder="전화번호" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -131,35 +131,40 @@
 									<strong>이메일 :</strong>
 								</div>
 								<div class="col-md-12">
-									<input type="text" name="email_address" class="form-control"
-										value="" />
+									<input type="text" id="email_address" name="email_address"
+										class="form-control" placeholder="이메일" />
 								</div>
 							</div>
 						</div>
-							<input type="text"  id="sample6_postcode" placeholder="우편번호">
-							<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br> 
-							<input type="text" id="sample6_address" placeholder="주소"><br> 
-							<input type="text"  id="sample6_detailAddress" placeholder="상세주소">
-							<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+						<input type="text" id="sample6_postcode" placeholder="우편번호">
+						<input type="button" onclick="sample6_execDaumPostcode()"
+							value="우편번호 찾기"><br> <input type="text"
+							id="sample6_address" placeholder="주소"><br> <input
+							type="text" id="sample6_detailAddress" placeholder="상세주소">
+						<input type="text" id="sample6_extraAddress" placeholder="참고항목">
 					</div>
 					<div class="panel panel-info">
 						<div class="panel-heading">
 							<span>
 								<div class="panel-name">결제방법</div>
-							</span> 
+							</span>
 						</div>
 						<!-- 결제 부근 포트원 쓸 예정 첫단 -->
 						<div class="form-group">
 							<div class="col-md-12">
-								<label class="pay"><input type="radio" name="payment_method" value="kakaopay" checked> 카카오페이</label> 
-								<label class="pay"> <input type="radio" name="payment_method" value="tosspay"> 토스페이</label>
-								<label class="pay"><input type="radio" name="payment_method" value="payco"> 페이코</label>
-								<label class="pay"><input type="radio" name="payment_method" value="smilpay"> 스마일페이</label>
-								<label class="pay"><input type="radio" name="payment_method" value="daou"> 키움페이</label>
+								<label class="pay"><input type="radio"
+									name="payment_method" value="kakaopay" checked> 카카오페이</label> <label
+									class="pay"> <input type="radio" name="payment_method"
+									value="tosspay"> 토스페이
+								</label> <label class="pay"><input type="radio"
+									name="payment_method" value="payco"> 페이코</label> <label
+									class="pay"><input type="radio" name="payment_method"
+									value="smilpay"> 스마일페이</label> <label class="pay"><input
+									type="radio" name="payment_method" value="daou"> 키움페이</label>
 							</div>
 						</div>
 						<div class="btn">
-							<button class="pay-btn" onclick="onClickPay()">결제하기</button>
+							<input type="button" class="pay-btn" id="money-btn" value="결제하기">
 						</div>
 					</div>
 				</div>
@@ -172,57 +177,82 @@
 	</div>
 </body>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-const onClickPay = async () => {
-    const IMP = window.IMP; // Iamport 객체 접근
-    IMP.init("imp55461844"); // 가맹점 식별키
+	var IMP = window.IMP;
+	IMP.init("imp55461844");   /* imp~ : 가맹점 식별코드*/
+	const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+    $('#money-btn').click(function() {
+        const firstName = document.getElementById('first_name').value;
+        const lastName = document.getElementById('last_name').value;
+        const phoneNumber = document.getElementById('phone_number').value;
+        const email = document.getElementById('email_address').value;
+        const postCode = document.getElementById('sample6_postcode').value;
+        const detailAddress = document.getElementById('sample6_detailAddress').value;
 
-    // 선택된 결제 방법 가져오기
-    const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
-
-    // 결제 요청
-    IMP.request_pay({
-        pg: paymentMethod, // 선택된 결제 방법
-        pay_method: 'card', // 결제 방법
-//         merchant_uid: uniqueOrderNumber, // 유니크한 주문 번호 삭제하니 해결`
-        name: '주문명:결제테스트',
-        amount: 100, // 총 금액parseFloat(${total})
-        m_redirect_url : 'http://localhost:8080/dong'
-    }, function (rsp) {
-        if (rsp.success) {
-            // [1] 서버단에서 결제정보 조회를 위해 imp_uid 전달하기
-            jQuery.ajax({
-                url: "payment", // 서버의 결제 확인 엔드포인트
-                type: 'POST',
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    imp_uid: rsp.imp_uid
-                    // 기타 필요한 데이터가 있으면 추가 전달
-                })
-            }).done(function(data) {
-                // [2] 서버에서 REST API로 결제정보 확인 및 서비스 루틴이 정상적인 경우
-                if (data.success) {
-                	window.location.href = 'http://localhost:8080/dong';
-                } else {
-                    // [3] 아직 제대로 결제가 되지 않았습니다.
-                    // [4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소 처리하였습니다.
-                    alert('결제 처리에 실패하였습니다. 서버에서 문제가 발생하였습니다.');
-                }
-            }).fail(function(jqXHR, textStatus, errorThrown) {
-                console.error('결제 처리 중 서버 오류:', textStatus, errorThrown);
-                alert('결제 처리 중 오류가 발생하였습니다.');
-            });
-        } else {
-            var msg = '결제에 실패하였습니다.';
-            msg += '\n에러내용 : ' + rsp.error_msg;
-
-            alert(msg);
+        // 빈 문자열 체크 및 경고 메시지 표시
+       if (!firstName) {
+            firstName.focus();
+            alert("성을 써주세요");
+            return false;
+        } else if (!lastName) {
+            lastName.focus();
+            alert("이름을 써주세요");
+            return false;
+        } else if (!phoneNumber) {
+            phoneNumber.focus();
+            alert("전화번호를 써주세요");
+            return false;
+        } else if (!email) {
+            email.focus();
+            alert("이메일을 써주세요");
+            return false;
         }
-    });
-}
+    	IMP.request_pay({
+    		pg: paymentMethod,
+    		pay_method: 'card',
+    		name: "쇼오핑몰",
+    		merchant_uid: 'merchant_' + new Date().getTime(),
 
+    		amount: ${total},
+            buyer_email: email, // 사용자가 입력한 이메일
+            buyer_name: firstName + ' ' + lastName, // 사용자가 입력한 이름
+            buyer_tel: phoneNumber, // 사용자가 입력한 전화번호
+            buyer_addr : postCode,
+    	}, function(rsp) {
+    		console.log(rsp);
+    		
+    		 //결제 성공 시
+    		if (rsp.success) {
+    			var msg = '결제가 완료되었습니다.';
+	 			window.location.href = '/dong'; 
+    			console.log("결제성공 ");
+				
+    			$.ajax({
+    				type: "POST",
+    				url: 'paymentPay',
+    				data: {
+    					amount: ${total}, // 총금액
+    					imp_uid: rsp.imp_uid, // 상품아이디 번호
+    					merchant_uid: rsp.merchant_uid, // 주문번호
+    					buyer_email : email, // 이메일
+    					buyer_name : firstName + '' + lastName, // 이름
+    					buyer_tel : phoneNumber, // 전화번호
+    					buyer_addr : postCode, // 주소번호
+    					buyer_detail_addr : detailAddress, // 상세주소
+    					username : '${usernames}',
+    					goodsId: '${goodsId}'
+    					
+    				}
+    			});
+    		} else {
+    			var msg = '결제에 실패하였습니다.';
+    			msg += '에러내용 : ' + rsp.error_msg;
+    		}
+    		alert(msg);
+        });
+    });
 function sample6_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
