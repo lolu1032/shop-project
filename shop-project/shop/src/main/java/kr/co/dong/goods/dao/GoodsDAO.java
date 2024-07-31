@@ -22,5 +22,5 @@ public interface GoodsDAO {
 	// 장바구니 비회원 -> 회원
 	public int updateCartsUsername(Map<String, Object> map);
 	// 장바구니 선택 삭제
-	public int deleteCartsList(Map<String, Object> map);
+	public int deleteCartsList(String cartsId);
 }

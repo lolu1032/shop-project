@@ -5,7 +5,9 @@
 <mapper namespace="kr.co.dong.goodsMapper">
 	<select id="goodsList"
 		resultType="kr.co.dong.domain.GoodsEntity">
-		select goods.id,goods.name,goods.price,img.path
+		select 
+			goods.id,goods.name,goods.price,goods.goodsType,
+			img.path
 		from goods
 		join img on img.refer_id= goods.id;
 	</select>
@@ -24,10 +26,10 @@
 	</select>
 	<!-- 장바구니 클릭시 insert -->
 	<insert id="insertCarts" parameterType="java.util.Map">
-		insert into cart (username,goods_id) values(#{username},#{goods_id})	
+		insert into cart (username,goods_id) values(#{username},#{goodsid})	
 	</insert>
 	<!-- 장바구니 유저에따라 다른 리스트 -->
-	<select id="cartsList" resultType="kr.co.dong.domain.GoodsEntity">
+<!--<select id="cartsList" resultType="kr.co.dong.domain.GoodsEntity">
 		select goods.name,goods.price,goods.colorType,goods.id,
 		cart.username,cart.id as cartsId,
 		img.path
@@ -35,6 +37,46 @@
 		join goods on goods.id = cart.goods_id
 		join img on img.refer_id = goods_id	
 		where username = #{username} 
+	</select>  -->
+	<select id="cartsList" resultType="kr.co.dong.domain.GoodsEntity">
+	with ProductCounts as (
+    	select
+        	goods.id as goodsId,
+        	goods.name,
+        	goods.price,
+        	goods.colorType,
+        	COUNT(cart.goods_id) as totalCount
+    	from 
+	        cart
+    	join 
+	        goods ON goods.id = cart.goods_id
+    	where 
+        	cart.username = #{username}
+    	group by 
+	        goods.id, goods.name, goods.price, goods.colorType
+	)
+	select
+	    pc.name,
+    	pc.price,
+	    pc.colorType,
+    	pc.goodsId,
+    	MIN(cart.id) as cartsId, 
+    	MIN(img.path) as path,
+    	pc.totalCount as count
+	from 
+	    ProductCounts pc
+	join 
+	    cart ON cart.goods_id = pc.goodsId
+	join 
+	    img ON img.refer_id = pc.goodsId
+	where 
+	    cart.username = #{username}
+	group by 
+	    pc.name,
+	    pc.price,
+	    pc.colorType,
+	    pc.goodsId,
+	    pc.totalCount;
 	</select>
 	
 		<!-- 비회원 -> 회원 로그인시 -->
@@ -43,9 +85,9 @@
 		set username = #{username}
 		where username = #{oldUsername}
 	</update>
-	<!-- 선택적 삭제 -->
-	 <delete id="deleteCartsList" parameterType="java.util.Map">
+	<!-- 선택적 삭제  and id = #{cartsId}-->
+	 <delete id="deleteCartsList" parameterType="kr.co.dong.domain.CartsEntity">
 	 	delete from cart
-	 	where goods_id = #{goods_id} and id = #{cartsId}
+	 	where id = #{cartsId}
 	 </delete>
 </mapper>

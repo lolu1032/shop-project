@@ -47,7 +47,7 @@ public class GoodsDAOImpl implements GoodsDAO{
 		return sqlSession.update("kr.co.dong.goodsMapper.updateCartsUsername", map);
 	}
 	@Override
-	public int deleteCartsList(Map<String, Object> map) {
-		return sqlSession.delete("kr.co.dong.goodsMapper.deleteCartsList",map);
+	public int deleteCartsList(String cartsId) {
+		return sqlSession.delete("kr.co.dong.goodsMapper.deleteCartsList",cartsId);
 	}
 }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.dong.paymentMapper">
+	<!-- 주문내역 정보 저장 -->
+	<insert id="insertOrders" parameterType="java.util.Map">
+		insert into orders
+		(addr,name,merchant,payPrice,number,email,imp,purchaseDate,username)
+		values(
+		#{addr},
+		#{name},
+		#{merchant},
+		#{payPrice},
+		#{number},
+		#{email},
+		#{imp},
+		now(),
+        #{username})
+	</insert>
+	<!-- 주문내역때 유저 아이디가 null이면 0을 반환하게해서 넣을예정 -->
+	<select id="selectUsersId" resultType="java.lang.String">
+    	select id from users where login = #{username}
+	</select>
+	<!-- 게스트 추가 -->
+	<insert id="insertGuest" parameterType="java.util.Map">
+		insert into guest (username,email) values(#{username},#{email})
+	</insert>
+	<!-- 주문과 동시에 장바구니 데이터 삭제 -> 주문내역 테이블에 데이터 옮기기 -->
+	<insert id="moveCartData" parameterType="java.lang.String">
+		insert into ordersDetail
+		(goodsId, username)
+		select goods_id, #{username}
+		from cart
+		where username
+		= #{username}
+	</insert>
+	<!-- 카트안에 있는 데이터 삭제 -->
+	<delete id="deleteOrders"
+		parameterType="kr.co.dong.domain.OrdersEntity">
+		delete from cart
+		where username = #{username}
+	</delete>
+	<!-- 회원용 주문내역 리스트 -->
+ 	<select id="ordersList"
+		resultType="kr.co.dong.domain.OrdersEntity">
+	with orderDetails as (
+    select 
+        username,
+        goodsId,
+        COUNT(*) as goodsCount
+    from 
+        ordersdetail
+    group by 
+        username, goodsId
+)
+select
+    orders.addr,
+    orders.name,
+    orders.merchant,
+    orders.payPrice,
+    orders.imp,
+    orders.purchaseDate,
+    goods.name as goodsName,
+    goods.price,
+    orderDetails.goodsCount
+from 
+    orders
+join 
+    ordersDetail on orders.username = ordersdetail.username
+join
+    goods on ordersdetail.goodsId = goods.id
+join
+    orderDetails on ordersdetail.username = orderDetails.username and ordersdetail.goodsId = orderDetails.goodsId
+where 
+    ordersdetail.username = #{username}
+group by
+    orders.addr,
+    orders.name,
+    orders.merchant,
+    orders.payPrice,
+    orders.imp,
+    orders.purchaseDate,
+    goods.name,
+    goods.price,
+    orderDetails.goodsCount;
+	</select> 
+	<!-- 게스트에 이메일이 있는지 확인  -->
+	<select id="selectGuestEmail" resultType="java.lang.String">
+		select username from guest where email = #{email}
+	</select>
+</mapper>

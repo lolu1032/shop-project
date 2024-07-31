@@ -5,7 +5,7 @@ public class GoodsEntity {
 	private int price; // 가격 
 	private String colorType; // 옷 색
 	private int discount_price; // 할인가격
-	private String goods_type; // 옷 유형
+	private String goodsType; // 옷 유형
 
 //	수정 사항
 	private String path;
@@ -15,9 +15,21 @@ public class GoodsEntity {
 // 	카트 유저네임
 	private String username;
 	private int cartsId;
+	private int count; // 상품의 중복된걸 카운트 해주는 친구
 	
 	
-	
+	public String getGoodsType() {
+		return goodsType;
+	}
+	public void setGoodsType(String goodsType) {
+		this.goodsType = goodsType;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
 	public int getCartsId() {
 		return cartsId;
 	}
@@ -59,12 +71,6 @@ public class GoodsEntity {
 	}
 	public void setDiscount_price(int discount_price) {
 		this.discount_price = discount_price;
-	}
-	public String getGoods_type() {
-		return goods_type;
-	}
-	public void setGoods_type(String goods_type) {
-		this.goods_type = goods_type;
 	}
 	public String getName() {
 		return name;

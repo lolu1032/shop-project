@@ -47,8 +47,8 @@ public class GoodServiceImpl implements GoodsService{
 		return goodsDAO.updateCartsUsername(map);
 	}
 	@Override
-	public int deleteCartsList(Map<String, Object> map) {
+	public int deleteCartsList(String cartsId) {
 		// TODO Auto-generated method stub
-		return goodsDAO.deleteCartsList(map);
+		return goodsDAO.deleteCartsList(cartsId);
 	}
 }

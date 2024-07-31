@@ -7,7 +7,6 @@ public class CartsEntity {
 	private String goods_id;
 	private String username;
 
-	
 	public int getId() {
 		return id;
 	}
