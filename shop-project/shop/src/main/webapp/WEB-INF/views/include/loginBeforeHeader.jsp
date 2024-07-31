@@ -70,7 +70,7 @@
 				<div class="bt_mypage">
 					<a href="">마이페이지 ∨</a>
 					<div class="mypage_sub">
-						<a href="">주문조회</a> <a href="">회원정보수정</a> <a href="">관심상품</a> <a
+						<a href="${contextPath }/nonMemberOrdersDetail">주문조회</a> <a href="">회원정보수정</a> <a href="">관심상품</a> <a
 							href="">적립금</a> <a href="">나의게시물</a> <a href="">최근본상품</a>
 					</div>
 				</div>

@@ -122,8 +122,8 @@
 									<strong>전화번호 : </strong>
 								</div>
 								<div class="col-md-12">
-									<input type="text" id="phone_number" name="phone_number"
-										class="form-control" placeholder="전화번호" />
+									<input type="number" id="phone_number" name="phone_number"
+										class="form-control" placeholder="010-1234-1234" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -131,8 +131,8 @@
 									<strong>이메일 :</strong>
 								</div>
 								<div class="col-md-12">
-									<input type="text" id="email_address" name="email_address"
-										class="form-control" placeholder="이메일" />
+									<input type="email" id="email_address" name="email_address"
+										class="form-control" placeholder="example@naver.com" />
 								</div>
 							</div>
 						</div>
@@ -190,6 +190,7 @@
         const email = document.getElementById('email_address').value;
         const postCode = document.getElementById('sample6_postcode').value;
         const detailAddress = document.getElementById('sample6_detailAddress').value;
+        const addr = document.getElementById('sample6_address').value;
 
         // 빈 문자열 체크 및 경고 메시지 표시
        if (!firstName) {
@@ -220,37 +221,50 @@
             buyer_name: firstName + ' ' + lastName, // 사용자가 입력한 이름
             buyer_tel: phoneNumber, // 사용자가 입력한 전화번호
             buyer_addr : postCode,
-    	}, function(rsp) {
+    	}, async function(rsp) {
     		console.log(rsp);
     		
     		 //결제 성공 시
     		if (rsp.success) {
     			var msg = '결제가 완료되었습니다.';
-	 			window.location.href = '/dong'; 
-    			console.log("결제성공 ");
-				
-    			$.ajax({
-    				type: "POST",
-    				url: 'paymentPay',
-    				data: {
-    					amount: ${total}, // 총금액
-    					imp_uid: rsp.imp_uid, // 상품아이디 번호
-    					merchant_uid: rsp.merchant_uid, // 주문번호
-    					buyer_email : email, // 이메일
-    					buyer_name : firstName + '' + lastName, // 이름
-    					buyer_tel : phoneNumber, // 전화번호
-    					buyer_addr : postCode, // 주소번호
-    					buyer_detail_addr : detailAddress, // 상세주소
-    					username : '${usernames}',
-    					goodsId: '${goodsId}'
-    					
-    				}
-    			});
+                    alert(msg);
+    			try {
+                    // 두 개의 AJAX 요청을 순차적으로 처리
+                    await $.ajax({
+                        type: "POST",
+                        url: 'paymentPay',
+                        data: {
+                            amount: `${total}`, // total은 실제 변수로 사용
+                            imp_uid: rsp.imp_uid,
+                            merchant_uid: rsp.merchant_uid,
+                            buyer_email: email,
+                            buyer_name: firstName + ' ' + lastName,
+                            buyer_tel: phoneNumber,
+                            buyer_addr: addr + " (" + postCode + ") " + detailAddress,
+                            username: `${usernames}`, 
+                            goodsId: `${goodsId}` 
+                        }
+                    });
+
+                    await $.ajax({
+                        type: "get",
+                        url: "ordersDetail",
+                        data: {
+                            username: `${usernames}` 
+                        }
+                    });
+
+                    window.location.href = '/dong'; // 페이지 이동
+
+                } catch (error) {
+                    alert('서버 요청 처리 중 오류가 발생했습니다.');
+                    console.error(error);
+                }
     		} else {
     			var msg = '결제에 실패하였습니다.';
     			msg += '에러내용 : ' + rsp.error_msg;
+	    		 alert(msg);
     		}
-    		alert(msg);
         });
     });
 function sample6_execDaumPostcode() {

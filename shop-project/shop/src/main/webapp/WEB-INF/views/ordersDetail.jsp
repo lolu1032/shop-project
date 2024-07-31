@@ -17,6 +17,7 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <body>
 	<div id="wrap">
+	<c:set var="total" value="${total + oe.price*oe.goodsCount }" />
 		<c:choose>
 			<c:when test="${not empty user}">
 				<%@ include file="include/loginAfterHeader.jsp"%>
@@ -27,21 +28,20 @@
 		</c:choose>
 		<div class="order-summary">
 			<h1>주문 내역</h1>
-			<div class="order-info">
-			<!-- orders를 가져와요 -->
-				<p>
-					<strong>주문 번호:</strong> [주문 번호]
-				</p>
-				<p>
-					<strong>주문 날짜:</strong> [주문 날짜]
-				</p>
-				<p>
-					<strong>고객 이름:</strong> [고객 이름]
-				</p>
-				<p>
-					<strong>배송 주소:</strong> [배송 주소]
-				</p>
-			</div>
+				<div class="order-info">
+					<p>
+						<strong>주문 번호:</strong> ${oe.imp }
+					</p>
+					<p>
+						<strong>주문 날짜:</strong> ${oe.purchaseDate }
+					</p>
+					<p>
+						<strong>고객 이름:</strong> ${oe.name }
+					</p>
+					<p>
+						<strong>배송 주소:</strong> ${oe.addr }
+					</p>
+				</div>
 
 			<h2>상품 정보</h2>
 			<table>
@@ -53,22 +53,21 @@
 						<th>합계</th>
 					</tr>
 				</thead>
-				<tbody>
 			<!-- c:foreach써요 -->
+			<c:forEach var="orders" items="${ordersList }">
+				<tbody>
 					<tr>
-						<td>[상품명1]</td>
-						<td>[수량1]</td>
-						<td>[단가1]</td>
-						<td>[합계1]</td>
+						<td>${orders.goodsName }</td>
+						<td>${orders.goodsCount }개</td>
+						<td><fmt:formatNumber value="${orders.price }" type="number" groupingUsed="true" />원</td>
+						<td><fmt:formatNumber value="${orders.payPrice }" type="number" groupingUsed="true" />원</td>
 					</tr>
 				</tbody>
+			</c:forEach>
 			</table>
 
 			<h2>결제 정보</h2>
 			<div class="payment-info">
-				<p>
-					<strong>상품 총액:</strong> [상품 총액]
-				</p>
 				<p>
 					<strong>배송비:</strong> 무료
 				</p>
@@ -76,7 +75,7 @@
 					<strong>할인:</strong> [할인]
 				</p>
 				<p>
-					<strong>총 결제 금액:</strong> [총 결제 금액]
+					<strong>총 결제 금액:</strong> <fmt:formatNumber value="${total }" groupingUsed="true" />원
 				</p>
 			</div>
 			<p class="contact-info">문의 사항이 있으시면 고객센터로 연락해 주세요.</p>
