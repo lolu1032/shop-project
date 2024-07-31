@@ -22,6 +22,7 @@
 				<h1 class="list">아우터</h1>
 				<div class="top_row">
 					<c:forEach items="${list}" var="goods">
+						<c:if test="${goods.goodsType == '아우터' }">
 						<div class="img">
 							<a href="goods/${goods.id}"><img
 								src="${contextPath }/${goods.path}"></a>
@@ -36,6 +37,7 @@
 								</div>
 							</div>
 						</div>
+						</c:if>
 					</c:forEach>
 				</div>
 			</div>

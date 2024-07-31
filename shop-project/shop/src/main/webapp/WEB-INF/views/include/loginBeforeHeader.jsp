@@ -84,8 +84,8 @@
 						<li class="xans-record-"><a href="${contextPath }"><font
 								color="red" class="z">9,900원💰</font></a></li>
 						<li class="xans-record-"><a href="${contextPath }/outer">아우터</a></li>
-						<li class="xans-record-"><a href="${contextPath }">상의</a></li>
-						<li class="xans-record-"><a href="${contextPath }">하의</a></li>
+						<li class="xans-record-"><a href="${contextPath }/top">상의</a></li>
+						<li class="xans-record-"><a href="${contextPath }/pants">하의</a></li>
 						<li class="xans-record-"><a href="${contextPath }">원피스</a></li>
 						<li class="xans-record-"><a href="${contextPath }">코디세트</a></li>
 						<li class="xans-record-"><a href="${contextPath }">슈즈/백</a></li>
