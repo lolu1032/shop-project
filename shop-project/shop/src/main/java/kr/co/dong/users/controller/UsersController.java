@@ -1,6 +1,7 @@
 package kr.co.dong.users.controller;
 
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,53 +35,55 @@ public class UsersController {
 	public String join() {
 		return "join";
 	}
+
 	@PostMapping(value = "join")
 	public String insertJoin(@RequestParam("id") String id, @RequestParam("password") String password,
 			@RequestParam("confirm_password") String confirm_password, @RequestParam("name") String name,
 			@RequestParam("phone") String phone, @RequestParam("email") String email, Model model) {
 
-		int id_check = service.checkId(id);
-
-		if (id_check > 0) {
-			model.addAttribute("error", "ÀÌ¹Ì ÀÖ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
-			return "join";
-		}
+		model.addAttribute("id", id);
+		model.addAttribute("password", password);
+		model.addAttribute("confirm_password", confirm_password);
+		model.addAttribute("name", name);
+		model.addAttribute("phone", phone);
+		model.addAttribute("email", email);
+		
 		UsersEntity usersEntity = new UsersEntity();
 
+		if (!Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id)) {
+			model.addAttribute("loginError", "¾ÆÀÌµğ´Â 5ÀÚ ÀÌ»ó 12ÀÚ ÀÌÇÏ, ¿µ¹®ÀÚ·Î ½ÃÀÛÇØ¾ß ÇÏ¸ç ¿µ¹®ÀÚ, ¼ıÀÚ, ¹ØÁÙ(_)¸¸ »ç¿ëÇÒ ¼ö ÀÖ½À´Ï´Ù.");
+			return "join";
+		}
+		if (!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{5,}$", password)) {
+			model.addAttribute("pwError", "ºñ¹Ğ¹øÈ£´Â ÃÖ¼Ò 5ÀÚ ÀÌ»ó, ¼ıÀÚ, ´ë¹®ÀÚ, ¼Ò¹®ÀÚ°¡ Æ÷ÇÔµÇ¾î¾ß ÇÕ´Ï´Ù.");
+			return "join";
+		}
+		if (!Pattern.matches("^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)*(\\.[a-zA-Z]{2,})$", email)) {
+			model.addAttribute("emailError", "¿Ã¹Ù¸¥ ÀÌ¸ŞÀÏ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù.");
+			return "join";
+		}
+		if (!Pattern.matches("^\\d{3}-\\d{3,4}-\\d{4}$", phone)) {
+			model.addAttribute("numberError", "ÀüÈ­¹øÈ£´Â 010-1234-5678 Çü½ÄÀ¸·Î ÀÔ·ÂÇØÁÖ¼¼¿ä.(-Æ÷ÇÔ)");
+			return "join";
+		}
+		if (!Pattern.matches("[°¡-ÆR]*$", name)) {
+			model.addAttribute("nameError", "ÀÌ¸§Àº ÇÑ±Û¸¸ ÀÔ·Â °¡´ÉÇÕ´Ï´Ù.");
+			return "join";
+		}
+		String checkEmail = service.checkEmail(email);
 		usersEntity.setLogin(id);
-		System.out.println("ID :" + id);
 		usersEntity.setPw(password);
-		System.out.println("PW : " + password);
 		usersEntity.setName(name);
-		System.out.println("Name : " + name);
 		usersEntity.setNumber(phone);
-		System.out.println("phone : " + phone);
+		if (checkEmail != null) {
+			model.addAttribute("checkEmail", "Áßº¹µÈ ÀÌ¸ŞÀÏÀÌ ÀÖ½À´Ï´Ù.");
+			return "join";
+		}
 		usersEntity.setEmail(email);
-		System.out.println("email : " + email);
 
 		int result = service.insertUsers(usersEntity);
 
-		if (result == 2) {
-			model.addAttribute("error", "¾ÆÀÌµğ´Â 5ÀÚ ÀÌ»ó 12ÀÚ ÀÌÇÏ, ¿µ¹®ÀÚ·Î ½ÃÀÛÇØ¾ß ÇÏ¸ç ¿µ¹®ÀÚ, ¼ıÀÚ, ¹ØÁÙ(_)¸¸ »ç¿ëÇÒ ¼ö ÀÖ½À´Ï´Ù.");
-			return "join";
-		} else if (result == 3) {
-			model.addAttribute("error", "ºñ¹Ğ¹øÈ£´Â ÃÖ¼Ò 5ÀÚ ÀÌ»ó, ¼ıÀÚ, ´ë¹®ÀÚ, ¼Ò¹®ÀÚ°¡ Æ÷ÇÔµÇ¾î¾ß ÇÕ´Ï´Ù.");
-			return "join";
-		} else if (result == 4) {
-			model.addAttribute("error", "¿Ã¹Ù¸¥ ÀÌ¸ŞÀÏ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù.");
-			return "join";
-		} else if (result == 5) {
-			model.addAttribute("error", "ÀüÈ­¹øÈ£´Â 010-1234-5678 Çü½ÄÀ¸·Î ÀÔ·ÂÇØÁÖ¼¼¿ä.");
-			return "join";
-		} else if (result == 6) {
-			model.addAttribute("error", "ÀÌ¸§Àº ÇÑ±Û¸¸ ÀÔ·Â °¡´ÉÇÕ´Ï´Ù.");
-			return "join";
-		} else if (result == 1) {
-			return "login";
-		} else {
-			model.addAttribute("error", "È¸¿ø°¡ÀÔ¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.");
-			return "join";
-		}
+		return "login";
 	}
 
 	// GetMappingÀ» ÇÏÁö¾ÊÀ¸¸é 405¿À·ù °É¸²
@@ -113,19 +116,23 @@ public class UsersController {
 		}
 	}
 
-	@PostMapping(value="joinForm")
+	@PostMapping(value = "joinForm")
 	@ResponseBody
-	public String check(@RequestParam("id") String id) {
-	    int checked = service.checkId(id);
-	    return String.valueOf(checked);
+	public String check(@RequestParam("id") String id,Model model) {
+		int checked = service.checkId(id);
+		if (!Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id)) {
+			return "reguxError";
+		}else if(checked == 1) {
+			return "duplicateError";
+		}
+		return "sucess";
 	}
 
-
-    @RequestMapping(value= {"logout","goods/logout"})
-    public String logout(HttpServletRequest request) {
-    		HttpSession session = request.getSession();
-    		session.invalidate();
-    		String referer = request.getHeader("Referer"); // ÀÌÀü url·Î µ¹¾Æ°¡±âÀ§ÇØ»ç¿ë
-    		return "redirect:"+referer;    		
-    	}
+	@RequestMapping(value = { "logout", "goods/logout" })
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		session.invalidate();
+		String referer = request.getHeader("Referer"); // ÀÌÀü url·Î µ¹¾Æ°¡±âÀ§ÇØ»ç¿ë
+		return "redirect:" + referer;
+	}
 }

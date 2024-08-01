@@ -18,18 +18,6 @@ public class UserServiceImpl implements UsersService{
 	
 	@Override
 	public int insertUsers(UsersEntity ue) {
-//		°¡µ¶¼ºÀ» À§ÇØ¼­ enum ¾Ë¾Æº¸±â
-		if(!Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", ue.getLogin())) {
-			return 2;			
-		}else if(!Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{5,}$", ue.getPw())) {
-			return 3;
-		}else if(!Pattern.matches("^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)*(\\.[a-zA-Z]{2,})$", ue.getEmail()) ) {
-			return 4;
-		}else if(!Pattern.matches("^\\d{3}-\\d{3,4}-\\d{4}$", ue.getNumber())) {
-			return 5;
-		}else if(!Pattern.matches("[°¡-ÆR]*$", ue.getName())) {
-			return 6;
-		}
 		return dao.insertUsers(ue);
 	}
 	// Ä¿½ºÅÒÀÎ¼Á¼ÇÀ¸·Î ÄÁÆ®·Ñ¿¡ ÀÖ´Â ¿À·ù¸Ş½ÃÁö¸¦ °ü¸® <-- ¾Ë¾Æº¸±â
@@ -41,6 +29,11 @@ public class UserServiceImpl implements UsersService{
 	@Override
 	public UsersEntity success(UsersEntity ue) {
 		return  dao.success(ue);
+	}
+	@Override
+	public String checkEmail(String email) {
+		// TODO Auto-generated method stub
+		return dao.checkEmail(email);
 	}
 	
 }

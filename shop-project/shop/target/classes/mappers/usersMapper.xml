@@ -16,8 +16,11 @@
 	</select>
 	
 	<select id="sucess" resultType="kr.co.dong.domain.UsersEntity">
-		select login,pw,name from users
+		select login,pw,name,email,number from users
 		where login = #{login} and pw = #{pw}
 	</select>
-	
+	<!-- 이메일 중복 -->
+	<select id="checkEmail" resultType="java.lang.String">
+		select email from users where email = #{email}
+	</select>
 </mapper>

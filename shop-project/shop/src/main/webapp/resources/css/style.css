@@ -740,3 +740,12 @@ table th {
     max-width: 400px;
     width: 100%;
 }
+.error{
+	font-size: 12px;
+	color:red;
+}
+.error-message {
+	font-size: 16px;
+	color:red;
+	text-align: center;
+}

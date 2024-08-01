@@ -60,7 +60,7 @@
 						<td>${orders.goodsName }</td>
 						<td>${orders.goodsCount }개</td>
 						<td><fmt:formatNumber value="${orders.price }" type="number" groupingUsed="true" />원</td>
-						<td><fmt:formatNumber value="${orders.payPrice }" type="number" groupingUsed="true" />원</td>
+						<td><fmt:formatNumber value="${orders.price*orders.goodsCount }" type="number" groupingUsed="true" />원</td>
 					</tr>
 				</tbody>
 			</c:forEach>
@@ -75,7 +75,7 @@
 					<strong>할인:</strong> [할인]
 				</p>
 				<p>
-					<strong>총 결제 금액:</strong> <fmt:formatNumber value="${total }" groupingUsed="true" />원
+					<strong>총 결제 금액:</strong> <fmt:formatNumber value="${oe.payPrice }" groupingUsed="true" />원
 				</p>
 			</div>
 			<p class="contact-info">문의 사항이 있으시면 고객센터로 연락해 주세요.</p>

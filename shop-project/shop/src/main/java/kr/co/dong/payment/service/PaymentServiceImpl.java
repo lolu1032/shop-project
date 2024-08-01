@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.co.dong.domain.OrdersEntity;
+import kr.co.dong.domain.UsersEntity;
 import kr.co.dong.payment.dao.PaymentDAO;
 
 @Service
@@ -54,5 +55,17 @@ public class PaymentServiceImpl implements PaymentService {
 	public String selectGuestEmail(String email) {
 		// TODO Auto-generated method stub
 		return dao.selectGuestEmail(email);
+	}
+
+	@Override
+	public String checkEmail(String email) {
+		// TODO Auto-generated method stub
+		return dao.checkEmail(email);
+	}
+
+	@Override
+	public UsersEntity selectEmailAndName(String username) {
+		// TODO Auto-generated method stub
+		return dao.selectEmailAndName(username);
 	}
 }

@@ -20,7 +20,7 @@
 		</c:choose>
 		<div class="login-container">
 			<h1>비회원 조회</h1>
-			<form action="#" method="post">
+			<form method="post">
 				<label for="email">이메일:</label> <input type="email" id="email"
 					name="email" required>
 

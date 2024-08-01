@@ -6,6 +6,16 @@ public class UsersEntity {
 	private String name;
 	private String number;
 	private String email;
+	private String confirm_password;
+	
+	
+	
+	public String getConfirm_password() {
+		return confirm_password;
+	}
+	public void setConfirm_password(String confirm_password) {
+		this.confirm_password = confirm_password;
+	}
 	public String getLogin() {
 		return login;
 	}

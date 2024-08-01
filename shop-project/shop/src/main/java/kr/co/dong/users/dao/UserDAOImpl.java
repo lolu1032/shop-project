@@ -34,4 +34,10 @@ public class UserDAOImpl implements UsersDAO{
 		login.put("pw",ue.getPw());
 		return sqlSession.selectOne("kr.co.dong.usersMapper.sucess",login);
 	}
+
+	@Override
+	public String checkEmail(String email) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.dong.usersMapper.checkEmail", email);
+	}
 }

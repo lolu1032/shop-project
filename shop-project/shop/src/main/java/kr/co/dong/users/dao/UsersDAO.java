@@ -10,4 +10,6 @@ public interface UsersDAO {
 	public int checkId(String id);
 	// 로그인 성공
 	public UsersEntity success(UsersEntity ue);
+	// 이메일 중복
+	public String checkEmail(String email);
 }

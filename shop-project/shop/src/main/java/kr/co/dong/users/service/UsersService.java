@@ -10,4 +10,6 @@ public interface UsersService {
 	public int checkId(String id);
 	// 아이디 비밀번호 일치
 	public UsersEntity success(UsersEntity ue);
+	// 이메일 중복체크
+	public String checkEmail(String email);
 }

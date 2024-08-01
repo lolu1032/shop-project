@@ -92,86 +92,124 @@
 					<!--장바구니-->
 				</div>
 				<!-- 결제 시작부 -->
-				<div
-					class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
-					<!--SHIPPING METHOD-->
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<div class="panel-name">결제</div>
-						</div>
-						<div class="panel-body">
-							<div class="form-group">
-								<div class="col-md-12">
-									<h4>결제 정보</h4>
+				<c:choose>
+					<c:when test="${not empty sessionScope.login }">
+						<div
+							class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
+							<div class="panel panel-info">
+								<div class="panel-heading">
+									<div class="panel-name">결제</div>
+								</div>
+								<div class="panel-body">
+									<div class="form-group">
+										<div class="col-md-12">
+											<h4>결제 정보</h4>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-6 col-xs-12">
+											<strong>이름 : </strong> <input type="text" id="last_name"
+												name="last_name" class="form-control" value="${sessionScope.user.name }" disabled="disabled" />
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<strong>전화번호 : </strong>
+										</div>
+										<div class="col-md-12">
+											<input type="text" id="phone_number" name="phone_number"
+												class="form-control" value="${sessionScope.user.number }" disabled="disabled" />
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<strong>이메일 :</strong>
+										</div>
+										<div class="col-md-12">
+											<input type="email" id="email_address" name="email_address"
+												class="form-control" value="${sessionScope.user.email }" disabled="disabled"/>
+										</div>
+									</div>
+								</div>
+					</c:when>
+					<c:otherwise>
+					<div
+						class="col-lg-6 col-md-6 col-sm-6 col-xs-12 col-md-pull-6 col-sm-pull-6">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<div class="panel-name">결제</div>
+							</div>
+							<div class="panel-body">
+								<div class="form-group">
+									<div class="col-md-12">
+										<h4>결제 정보</h4>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-6 col-xs-12">
+										<strong>이름 : </strong> <input type="text" id="last_name"
+											name="last_name" class="form-control" placeholder="이름" />
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<strong>전화번호 : </strong>
+									</div>
+									<div class="col-md-12">
+										<input type="text" id="phone_number" name="phone_number"
+											class="form-control" placeholder="010-1234-1234" />
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<strong>이메일 :</strong>
+									</div>
+									<div class="col-md-12">
+										<input type="text" id="email_address" name="email_address"
+											class="form-control" placeholder="example@naver.com"
+											onblur="checkEmail()" />
+										<div id="check"></div>
+									</div>
 								</div>
 							</div>
-							<div class="form-group">
-								<div class="col-md-6 col-xs-12">
-									<strong>성 : </strong> <input type="text" id="first_name"
-										name="first_name" class="form-control" placeholder="성" />
-								</div>
-								<div class="span1"></div>
-								<div class="col-md-6 col-xs-12">
-									<strong>이름 : </strong> <input type="text" id="last_name"
-										name="last_name" class="form-control" placeholder="이름" />
-								</div>
-							</div>
-							<!-- 끝단 -->
-							<div class="form-group">
-								<div class="col-md-12">
-									<strong>전화번호 : </strong>
-								</div>
-								<div class="col-md-12">
-									<input type="number" id="phone_number" name="phone_number"
-										class="form-control" placeholder="010-1234-1234" />
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-12">
-									<strong>이메일 :</strong>
-								</div>
-								<div class="col-md-12">
-									<input type="email" id="email_address" name="email_address"
-										class="form-control" placeholder="example@naver.com" />
-								</div>
-							</div>
-						</div>
-						<input type="text" id="sample6_postcode" placeholder="우편번호">
-						<input type="button" onclick="sample6_execDaumPostcode()"
-							value="우편번호 찾기"><br> <input type="text"
-							id="sample6_address" placeholder="주소"><br> <input
-							type="text" id="sample6_detailAddress" placeholder="상세주소">
-						<input type="text" id="sample6_extraAddress" placeholder="참고항목">
-					</div>
-					<div class="panel panel-info">
-						<div class="panel-heading">
-							<span>
-								<div class="panel-name">결제방법</div>
-							</span>
-						</div>
-						<!-- 결제 부근 포트원 쓸 예정 첫단 -->
-						<div class="form-group">
-							<div class="col-md-12">
-								<label class="pay"><input type="radio"
-									name="payment_method" value="kakaopay" checked> 카카오페이</label> <label
-									class="pay"> <input type="radio" name="payment_method"
-									value="tosspay"> 토스페이
-								</label> <label class="pay"><input type="radio"
-									name="payment_method" value="payco"> 페이코</label> <label
-									class="pay"><input type="radio" name="payment_method"
-									value="smilpay"> 스마일페이</label> <label class="pay"><input
-									type="radio" name="payment_method" value="daou"> 키움페이</label>
-							</div>
-						</div>
-						<div class="btn">
-							<input type="button" class="pay-btn" id="money-btn" value="결제하기">
-						</div>
+					</c:otherwise>
+				</c:choose>
+				<input type="text" id="sample6_postcode" placeholder="우편번호">
+				<input type="button" onclick="sample6_execDaumPostcode()"
+					value="우편번호 찾기"><br> <input type="text"
+					id="sample6_address" placeholder="주소"><br> <input
+					type="text" id="sample6_detailAddress" placeholder="상세주소">
+				<input type="text" id="sample6_extraAddress" placeholder="참고항목">
+			</div>
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<span>
+						<div class="panel-name">결제방법</div>
+					</span>
+				</div>
+				<!-- 결제 부근 포트원 쓸 예정 첫단 -->
+				<div class="form-group">
+					<div class="col-md-12">
+						<label class="pay"><input type="radio"
+							name="payment_method" value="kakaopay" checked> 카카오페이</label> <label
+							class="pay"> <input type="radio" name="payment_method"
+							value="tosspay"> 토스페이
+						</label> <label class="pay"><input type="radio"
+							name="payment_method" value="payco"> 페이코</label> <label
+							class="pay"><input type="radio" name="payment_method"
+							value="smilpay"> 스마일페이</label> <label class="pay"><input
+							type="radio" name="payment_method" value="daou"> 키움페이</label>
 					</div>
 				</div>
-				<!--결제 끝단-->
+				<div class="btn">
+					<input type="button" class="pay-btn" id="money-btn" value="결제하기">
+				</div>
 			</div>
-
 		</div>
+		<!--결제 끝단-->
+	</div>
+
+	</div>
 	</div>
 	<div class="row cart-footer"></div>
 	</div>
@@ -180,34 +218,52 @@
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+$('#email_address').focusout(function(){
+		let email = $('#email_address').val();
+		
+		$.ajax({
+			url: "checkEmail",
+			type: "post",
+			data: {email: email},
+			dataType: "text",
+	        success: function(result) {
+	            if (result == "success") {
+	                $("#check").html('사용할 수 있는 이메일입니다.');
+	                $("#check").css('color', 'green');
+	            } else if (result == "duplicationEmail") {
+	                $("#check").html('이미 사용 중인 이메일입니다.');
+	                $("#check").css('color', 'red');
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("AJAX Error:", status, error);
+	            console.error("Response:", xhr.responseText);
+	            alert("서버 요청 실패");
+	        }
+	    });
+	});
 	var IMP = window.IMP;
 	IMP.init("imp55461844");   /* imp~ : 가맹점 식별코드*/
 	const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
     $('#money-btn').click(function() {
-        const firstName = document.getElementById('first_name').value;
-        const lastName = document.getElementById('last_name').value;
-        const phoneNumber = document.getElementById('phone_number').value;
-        const email = document.getElementById('email_address').value;
-        const postCode = document.getElementById('sample6_postcode').value;
-        const detailAddress = document.getElementById('sample6_detailAddress').value;
-        const addr = document.getElementById('sample6_address').value;
-
+        const lastName = document.getElementById('last_name');
+        const phoneNumber = document.getElementById('phone_number');
+        const email = document.getElementById('email_address');
+        const postCode = document.getElementById('sample6_postcode');
+        const detailAddress = document.getElementById('sample6_detailAddress');
+        const addr = document.getElementById('sample6_address');
         // 빈 문자열 체크 및 경고 메시지 표시
-       if (!firstName) {
-            firstName.focus();
-            alert("성을 써주세요");
-            return false;
-        } else if (!lastName) {
-            lastName.focus();
+      	if (!lastName.value) {
             alert("이름을 써주세요");
+            lastName.focus();
             return false;
-        } else if (!phoneNumber) {
-            phoneNumber.focus();
+        } else if (!phoneNumber.value) {
             alert("전화번호를 써주세요");
+            phoneNumber.focus();
             return false;
-        } else if (!email) {
-            email.focus();
+        } else if (!email.value) {
             alert("이메일을 써주세요");
+            email.focus();
             return false;
         }
     	IMP.request_pay({
@@ -216,11 +272,11 @@
     		name: "쇼오핑몰",
     		merchant_uid: 'merchant_' + new Date().getTime(),
 
-    		amount: ${total},
-            buyer_email: email, // 사용자가 입력한 이메일
-            buyer_name: firstName + ' ' + lastName, // 사용자가 입력한 이름
-            buyer_tel: phoneNumber, // 사용자가 입력한 전화번호
-            buyer_addr : postCode,
+    		amount: `${total}`,
+            buyer_email: email.value, // 사용자가 입력한 이메일
+            buyer_name: lastName.value, // 사용자가 입력한 이름
+            buyer_tel: phoneNumber.value, // 사용자가 입력한 전화번호
+            buyer_addr : postCode.value,
     	}, async function(rsp) {
     		console.log(rsp);
     		
@@ -237,10 +293,10 @@
                             amount: `${total}`, // total은 실제 변수로 사용
                             imp_uid: rsp.imp_uid,
                             merchant_uid: rsp.merchant_uid,
-                            buyer_email: email,
-                            buyer_name: firstName + ' ' + lastName,
-                            buyer_tel: phoneNumber,
-                            buyer_addr: addr + " (" + postCode + ") " + detailAddress,
+                            buyer_email: email.value,
+                            buyer_name: lastName.value,
+                            buyer_tel: phoneNumber.value,
+                            buyer_addr: addr.value + " (" + postCode.value + ") " + detailAddress.value,
                             username: `${usernames}`, 
                             goodsId: `${goodsId}` 
                         }

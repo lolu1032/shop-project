@@ -50,10 +50,18 @@ public class GoodsController {
 	@GetMapping(value = { "cart", "payment" })
 	public List<GoodsEntity> cart(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession(false);
+		
 		Map<String, Object> carts = new HashMap<String, Object>();
 		Map<String, Object> log = new HashMap<String, Object>();
+		
 		String username = getUsersFromSession(session);
-		log.put("oldUsername", username);
+		String oldUsername;
+		if(session == null) {
+			oldUsername = "Guest-" + System.currentTimeMillis();
+		}else {
+			oldUsername = session.getId();			
+		}
+		log.put("oldUsername", oldUsername);			
 		log.put("username", username);
 		service.updateCartsUsername(log);
 		List<GoodsEntity> cartList = service.cartsList(username);
