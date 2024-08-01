@@ -53,7 +53,7 @@
 						<div class="panel-body">
 							<!-- foreach시작 -->
 							<c:forEach var="cart" items="${cart }">
-								<c:set var="total" value="${total + cart.price*cart.count }" />
+								<c:set var="total" value="${cart.price*cart.count }" />
 								<div class="form-group">
 									<div class="col-sm-3 col-xs-3">
 										<img class="img-responsive" src="${contextPath }/${cart.path}" />
@@ -257,12 +257,17 @@ function checkEmail() {
         const detailAddress = document.getElementById('sample6_detailAddress');
         const addr = document.getElementById('sample6_address');
     	
-    	checkEmail();
-    	
+        // 로그인 상태 확인
+        const isLoggedIn = '${not empty sessionScope.login}';
+        
+        if (!isLoggedIn) {
+            checkEmail();
+        }
+        
         setTimeout(function() {
-            if (!isEmailValid) {
+            if (!isLoggedIn && !isEmailValid) {
                 alert("유효한 이메일을 입력해 주세요.");
-				email.focus();                
+                email.focus();                
                 return; // 이메일이 유효하지 않으면 결제 진행하지 않음
             }
     	

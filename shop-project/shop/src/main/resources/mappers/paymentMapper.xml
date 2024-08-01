@@ -44,46 +44,42 @@
 	<!-- 주문내역 리스트 -->
  	<select id="ordersList"
 		resultType="kr.co.dong.domain.OrdersEntity">
-	with orderDetails as (
-    select 
+WITH orderDetails AS (
+    SELECT 
         username,
         goodsId,
-        COUNT(*) as goodsCount
-    from 
-        ordersdetail
-    group by 
+        COUNT(*) AS goodsCount
+    FROM 
+        ordersDetail
+    GROUP BY 
         username, goodsId
+),
+rankedOrders AS (
+    SELECT 
+        orders.addr,
+        orders.name,
+        orders.merchant,
+        orders.payPrice,
+        orders.imp,
+        orders.purchaseDate,
+        goods.name AS goodsName,
+        goods.price,
+        orderDetails.goodsCount,
+        ROW_NUMBER() OVER (PARTITION BY orders.username, goods.id ORDER BY orders.purchaseDate) AS rn
+    FROM 
+        orders
+    JOIN 
+        ordersDetail ON orders.username = ordersDetail.username
+    JOIN
+        goods ON ordersDetail.goodsId = goods.id
+    JOIN
+        orderDetails ON ordersDetail.username = orderDetails.username AND ordersDetail.goodsId = orderDetails.goodsId
+        WHERE 
+        ordersDetail.username = #{username}
 )
-select
-    orders.addr,
-    orders.name,
-    orders.merchant,
-    orders.payPrice,
-    orders.imp,
-    orders.purchaseDate,
-    goods.name as goodsName,
-    goods.price,
-    orderDetails.goodsCount
-from 
-    orders
-join 
-    ordersDetail on orders.username = ordersdetail.username
-join
-    goods on ordersdetail.goodsId = goods.id
-join
-    orderDetails on ordersdetail.username = orderDetails.username and ordersdetail.goodsId = orderDetails.goodsId
-where 
-    ordersdetail.username = #{username}
-group by
-    orders.addr,
-    orders.name,
-    orders.merchant,
-    orders.payPrice,
-    orders.imp,
-    orders.purchaseDate,
-    goods.name,
-    goods.price,
-    orderDetails.goodsCount;
+SELECT *
+FROM rankedOrders
+WHERE rn = 1;
 	</select> 
 	<!-- 게스트에 이메일이 있는지 확인  -->
 	<select id="selectGuestEmail" resultType="java.lang.String">

@@ -39,6 +39,8 @@ public class PaymentController {
 		map.put("number",tel);
 		map.put("imp", imp);
 		String guest = service.selectUsersId(username);
+		map.put("email",email);
+		map.put("username", username);
 		String existingUsername = service.selectGuestEmail(email);
 		if(guest == null) {
 			if(existingUsername != null) {
@@ -49,8 +51,6 @@ public class PaymentController {
 			map.put("email", email);
 			service.insertGuest(map);
 		}
-		map.put("email",email);
-		map.put("username", username);
 		service.insertOrders(map);
 		service.moveCartData(username);
 		service.deleteOrdersList(username);
@@ -75,10 +75,6 @@ public class PaymentController {
 		HttpSession session = request.getSession(false);
 		String username = getUserNameFromSession(session);
 		List<OrdersEntity> ordersList =  service.orderDetailList(username);
-		for(int i = 0; i < ordersList.size();i++) {
-			OrdersEntity oe = ordersList.get(i);			
-			model.addAttribute("oe", oe);
-		}
 		model.addAttribute("ordersList", ordersList);
 		return "ordersDetail";
 	}
@@ -97,10 +93,6 @@ public class PaymentController {
 		}else {
 			List<OrdersEntity> ordersList = service.orderDetailList(username);
 			model.addAttribute("ordersList", ordersList);
-			for(int i = 0; i < ordersList.size();i++) {
-				OrdersEntity oe = ordersList.get(i);			
-				model.addAttribute("oe", oe);
-			}
 			return "ordersDetail";
 		}
 	}
