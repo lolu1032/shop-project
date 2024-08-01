@@ -39,9 +39,14 @@ public class PaymentController {
 		map.put("number",tel);
 		map.put("imp", imp);
 		String guest = service.selectUsersId(username);
+		String existingUsername = service.selectGuestEmail(email);
 		if(guest == null) {
-			map.put("username", username);
-			map.put("email", email);				
+			if(existingUsername != null) {
+				map.put("username", existingUsername);								
+			}else {
+				map.put("username",username);
+			}
+			map.put("email", email);
 			service.insertGuest(map);
 		}
 		map.put("email",email);

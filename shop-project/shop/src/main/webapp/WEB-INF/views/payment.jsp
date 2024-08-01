@@ -218,30 +218,34 @@
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-$('#email_address').focusout(function(){
-		let email = $('#email_address').val();
-		
-		$.ajax({
-			url: "checkEmail",
-			type: "post",
-			data: {email: email},
-			dataType: "text",
-	        success: function(result) {
-	            if (result == "success") {
-	                $("#check").html('사용할 수 있는 이메일입니다.');
-	                $("#check").css('color', 'green');
-	            } else if (result == "duplicationEmail") {
-	                $("#check").html('이미 사용 중인 이메일입니다.');
-	                $("#check").css('color', 'red');
-	            }
-	        },
-	        error: function(xhr, status, error) {
-	            console.error("AJAX Error:", status, error);
-	            console.error("Response:", xhr.responseText);
-	            alert("서버 요청 실패");
-	        }
-	    });
+var isEmailValid = false; // 이메일 유효성 체크 변수 추가
+
+function checkEmail() {
+	let email = $('#email_address').val();
+	$.ajax({
+		url: "checkEmail",
+		type: "post",
+		data: {
+			email: email
+		},
+        success: function(result) {
+            if (result == "success") {
+                $("#check").html('사용할 수 있는 이메일입니다.');
+                $("#check").css('color', 'green');
+                isEmailValid = true;
+            } else if (result == "duplicationEmail") {
+                $("#check").html('이미 사용 중인 이메일입니다.');
+                $("#check").css('color', 'red');
+                isEmailValid = false;
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("AJAX Error:", status, error);
+            console.error("Response:", xhr.responseText);
+            alert("서버 요청 실패");
+        }
 	});
+}
 	var IMP = window.IMP;
 	IMP.init("imp55461844");   /* imp~ : 가맹점 식별코드*/
 	const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
@@ -252,6 +256,16 @@ $('#email_address').focusout(function(){
         const postCode = document.getElementById('sample6_postcode');
         const detailAddress = document.getElementById('sample6_detailAddress');
         const addr = document.getElementById('sample6_address');
+    	
+    	checkEmail();
+    	
+        setTimeout(function() {
+            if (!isEmailValid) {
+                alert("유효한 이메일을 입력해 주세요.");
+				email.focus();                
+                return; // 이메일이 유효하지 않으면 결제 진행하지 않음
+            }
+    	
         // 빈 문자열 체크 및 경고 메시지 표시
       	if (!lastName.value) {
             alert("이름을 써주세요");
@@ -283,7 +297,7 @@ $('#email_address').focusout(function(){
     		 //결제 성공 시
     		if (rsp.success) {
     			var msg = '결제가 완료되었습니다.';
-                    alert(msg);
+                alert(msg);
     			try {
                     // 두 개의 AJAX 요청을 순차적으로 처리
                     await $.ajax({
@@ -322,6 +336,7 @@ $('#email_address').focusout(function(){
 	    		 alert(msg);
     		}
         });
+        },500);
     });
 function sample6_execDaumPostcode() {
     new daum.Postcode({

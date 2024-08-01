@@ -41,7 +41,7 @@
 		delete from cart
 		where username = #{username}
 	</delete>
-	<!-- 회원용 주문내역 리스트 -->
+	<!-- 주문내역 리스트 -->
  	<select id="ordersList"
 		resultType="kr.co.dong.domain.OrdersEntity">
 	with orderDetails as (
@@ -87,6 +87,6 @@ group by
 	</select> 
 	<!-- 게스트에 이메일이 있는지 확인  -->
 	<select id="selectGuestEmail" resultType="java.lang.String">
-		select username from guest where email = #{email}
+		select distinct username from guest where email = #{email}
 	</select>
 </mapper>
