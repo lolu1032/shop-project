@@ -53,7 +53,7 @@
 						<div class="panel-body">
 							<!-- foreach시작 -->
 							<c:forEach var="cart" items="${cart }">
-								<c:set var="total" value="${cart.price*cart.count }" />
+								<c:set var="total" value="${total+cart.price*cart.count }" />
 								<div class="form-group">
 									<div class="col-sm-3 col-xs-3">
 										<img class="img-responsive" src="${contextPath }/${cart.path}" />
@@ -190,15 +190,11 @@
 				<!-- 결제 부근 포트원 쓸 예정 첫단 -->
 				<div class="form-group">
 					<div class="col-md-12">
-						<label class="pay"><input type="radio"
-							name="payment_method" value="kakaopay" checked> 카카오페이</label> <label
-							class="pay"> <input type="radio" name="payment_method"
-							value="tosspay"> 토스페이
-						</label> <label class="pay"><input type="radio"
-							name="payment_method" value="payco"> 페이코</label> <label
-							class="pay"><input type="radio" name="payment_method"
-							value="smilpay"> 스마일페이</label> <label class="pay"><input
-							type="radio" name="payment_method" value="daou"> 키움페이</label>
+						<label class="pay"><input type="radio" name="payment_method" value="kakaopay" checked> 카카오페이</label> 
+						<label class="pay"> <input type="radio" name="payment_method" value="tosspay"> 토스페이 </label> 
+						<label class="pay"><input type="radio" name="payment_method" value="payco"> 페이코</label> 
+						<label class="pay"><input type="radio" name="payment_method" value="smilepay"> 스마일페이</label>
+						 <label class="pay"><input type="radio" name="payment_method" value="daou"> 키움페이</label>
 					</div>
 				</div>
 				<div class="btn">
@@ -248,7 +244,6 @@ function checkEmail() {
 }
 	var IMP = window.IMP;
 	IMP.init("imp55461844");   /* imp~ : 가맹점 식별코드*/
-	const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
     $('#money-btn').click(function() {
         const lastName = document.getElementById('last_name');
         const phoneNumber = document.getElementById('phone_number');
@@ -285,6 +280,7 @@ function checkEmail() {
             email.focus();
             return false;
         }
+		let paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
     	IMP.request_pay({
     		pg: paymentMethod,
     		pay_method: 'card',

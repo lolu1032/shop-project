@@ -51,13 +51,13 @@
 					</div>
 					<div class="xans-element- xans-myshop xans-myshop-main left_wish">
 						<a href="" class="wish_icon"> <span class="wish_count p_bg">
-								<span class="xans_myshop_main_interest_prd_cnt">찜</span>
+								<span class="xans_myshop_main_interest_prd_cnt"><i class="fa-solid fa-heart"></i></span>
 						</span>
 						</a>
 					</div>
 					<div
 						class="xans-element- xans-layout xans-layout-orderbasketcount left_cart">
-						<a href="${contextPath }/cart" class="cart_icon"> <span class="cart_count p_bg">장</span>
+						<a href="${contextPath }/cart" class="cart_icon"> <span class="cart_count p_bg"><i class="fa-solid fa-cart-shopping"></i></span>
 						</a>
 					</div>
 				</div>

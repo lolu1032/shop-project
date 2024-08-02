@@ -32,7 +32,7 @@
 									<div class="price">
 										<fmt:formatNumber value="${goods.price }" type="number" groupingUsed="true" />원
 									</div>
-									<div class="like">♡</div>
+									<div class="like"><i class="fa-regular fa-heart"></i></div>
 									<!-- 하트는 폰트어썸에서 가져올예정 -->
 								</div>
 							</div>
