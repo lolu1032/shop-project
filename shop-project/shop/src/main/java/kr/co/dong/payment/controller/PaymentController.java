@@ -72,14 +72,23 @@ public class PaymentController {
 	
 	@GetMapping(value = "ordersDetail")
 	public String ordersDetail(HttpServletRequest request, Model model) {
-		HttpSession session = request.getSession(false);
-		String username = getUserNameFromSession(session);
-		List<OrdersEntity> ordersList =  service.orderDetailList(username);
-		model.addAttribute("ordersList", ordersList);
-		ordersList = service.ordersDetailGoodsList(username);
-		model.addAttribute("ordersGoodsList", ordersList);
-		return "ordersDetail";
+	    HttpSession session = request.getSession(false);
+	    String username = getUserNameFromSession(session);
+	    List<OrdersEntity> ordersList = service.orderDetailList(username);
+	    model.addAttribute("ordersList", ordersList);
+
+	    // 주문별 상품 목록을 맵에 저장
+	    // 이친구 알아내기
+	    Map<String, List<OrdersEntity>> ordersGoodsMap = new HashMap<String, List<OrdersEntity>>();
+	    for (OrdersEntity order : ordersList) {
+	        List<OrdersEntity> goodsList = service.ordersDetailGoodsList(order.getImp());
+	        ordersGoodsMap.put(order.getImp(), goodsList);
+	    }
+	    model.addAttribute("ordersGoodsMap", ordersGoodsMap);
+
+	    return "ordersDetail";
 	}
+
 	
 	@GetMapping(value="nonMemberOrdersDetail")
 	public String nonMemberOrdersDetail() {

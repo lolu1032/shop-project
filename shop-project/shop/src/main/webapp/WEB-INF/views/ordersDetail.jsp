@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ page session="true"%>
@@ -13,16 +12,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
 </head>
-    <style>
-    .swiper-slide {
-    	margin: 0 auto;
-    	padding: 5px;
-    }
-    .order-summary {
-    	width: 650px;
-    	height: 650px;
-    }
-    </style>
+<style>
+.swiper-slide {
+    margin: 0 auto;
+    padding: 5px;
+}
+.order-summary {
+    width: 650px;
+    height: 650px;
+}
+</style>
 <body>
     <div id="wrap">
         <c:choose>
@@ -35,15 +34,16 @@
         </c:choose>
         <div class="swiper">
             <div class="swiper-wrapper">
-                <c:forEach var="orders" items="${ordersList}">
+                <c:forEach var="order" items="${ordersList}">
+                    <c:set var="currentOrderImp" value="${order.imp}" />
                     <div class="swiper-slide">
                         <div class="order-summary">
                             <h1>주문 내역</h1>
                             <div class="order-info">
-                                <p><strong>주문 번호:</strong> ${orders.imp }</p>
-                                <p><strong>주문 날짜:</strong> ${orders.purchaseDate }</p>
-                                <p><strong>고객 이름:</strong> ${orders.name }</p>
-                                <p><strong>배송 주소:</strong> ${orders.addr }</p>
+                                <p><strong>주문 번호:</strong> ${order.imp }</p>
+                                <p><strong>주문 날짜:</strong> ${order.purchaseDate }</p>
+                                <p><strong>고객 이름:</strong> ${order.name }</p>
+                                <p><strong>배송 주소:</strong> ${order.addr }</p>
                             </div>
                             <h2>상품 정보</h2>
                             <table>
@@ -55,33 +55,29 @@
                                         <th>합계</th>
                                     </tr>
                                 </thead>
-                                <c:forEach var="ordersGoodsList" items="${ordersGoodsList }">
-                                <!-- 수정해야할거 추가 구매시 새로운 주문내역으로 만들어져서 그 상품만 떠야하는데
-                                전에 샀던 주문내역에 새로 산 상품이 추가로 들어가고 새로운 주문내역에도 전이랑 새로산거 같이 나옴 -->
-                                <c:if test="${ordersGoodsList.purchaseDate eq orders.purchaseDate}">
-	                                <tbody>
-    	                                <tr>
-        	                                <td>${ordersGoodsList.name }</td>
-            	                            <td>${ordersGoodsList.goodsCount }개</td>
-                	                        <td><fmt:formatNumber value="${ordersGoodsList.price }" type="number" groupingUsed="true" />원</td>
-                    	                    <td><fmt:formatNumber value="${ordersGoodsList.price*ordersGoodsList.goodsCount }" type="number" groupingUsed="true" />원</td>
-                        	            </tr>
-                            	    </tbody>
-                            	</c:if>
-                                </c:forEach>
+                                <tbody>
+                                    <c:forEach var="goods" items="${ordersGoodsMap[currentOrderImp]}">
+                                        <tr>
+                                            <td>${goods.name }</td>
+                                            <td>${goods.goodsCount }개</td>
+                                            <td><fmt:formatNumber value="${goods.price }" type="number" groupingUsed="true" />원</td>
+                                            <td><fmt:formatNumber value="${goods.price * goods.goodsCount }" type="number" groupingUsed="true" />원</td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
                             </table>
                             <h2>결제 정보</h2>
                             <div class="payment-info">
                                 <p><strong>배송비:</strong> 무료</p>
                                 <p><strong>할인:</strong> [할인]</p>
-                                <p><strong>총 결제 금액:</strong> <fmt:formatNumber value="${orders.payPrice}" groupingUsed="true" />원</p>
+                                <p><strong>총 결제 금액:</strong> <fmt:formatNumber value="${order.payPrice}" groupingUsed="true" />원</p>
                             </div>
                             <p class="contact-info">문의 사항이 있으시면 고객센터로 연락해 주세요.</p>
                         </div>
                     </div>
                 </c:forEach>
             </div>
-          	<div class="swiper-pagination"></div>
+            <div class="swiper-pagination"></div>
         </div>
     </div>
     <%@ include file="include/footer.jsp"%>

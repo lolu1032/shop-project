@@ -70,8 +70,8 @@ public class PaymentDAOImpl implements PaymentDAO {
 	}
 
 	@Override
-	public List<OrdersEntity> ordersDetailGoodsList(String username) {
+	public List<OrdersEntity> ordersDetailGoodsList(String imp) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("kr.co.dong.paymentMapper.ordersDetailGoodsList", username);
+		return sqlSession.selectList("kr.co.dong.paymentMapper.ordersDetailGoodsList", imp);
 	}
 }

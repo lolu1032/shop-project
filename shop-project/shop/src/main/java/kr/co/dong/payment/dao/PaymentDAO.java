@@ -26,6 +26,6 @@ public interface PaymentDAO {
 	// 세션이 있을시 이메일이랑 이름 가져오기
 	public UsersEntity selectEmailAndName(String username);
 	// 주문내역 상품리스트
-	public List<OrdersEntity> ordersDetailGoodsList(String username);
+	public List<OrdersEntity> ordersDetailGoodsList(String imp);
 	
 }

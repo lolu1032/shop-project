@@ -70,8 +70,8 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public List<OrdersEntity> ordersDetailGoodsList(String username) {
+	public List<OrdersEntity> ordersDetailGoodsList(String imp) {
 		// TODO Auto-generated method stub
-		return dao.ordersDetailGoodsList(username);
+		return dao.ordersDetailGoodsList(imp);
 	}
 }

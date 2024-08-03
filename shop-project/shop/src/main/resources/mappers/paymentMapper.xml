@@ -65,10 +65,10 @@ group by
 		select distinct username from guest where email = #{email}
 	</select>
 	<select id="ordersDetailGoodsList" resultType="kr.co.dong.domain.OrdersEntity">
-		select goods.name,goods.price,count(*) as goodsCount
+		select goods.name,goods.price,count(*) as goodsCount,imp
 			from ordersDetail
 		join goods on ordersDetail.goodsId = goods.id
-		where ordersDetail.username = #{username}
-		group by goods.name,goods.price;
+		where ordersDetail.imp = #{imp}
+		group by goods.name,goods.price,imp;
 	</select>
 </mapper>
