@@ -12,7 +12,7 @@ public interface PaymentDAO {
 	// 주문 성공 상품 삭제
 	public int deleteOrdersList(String name);
 	// 장바구니 데이터 옮기기
-	public int moveCartData(String name);
+	public int moveCartData(Map<String, Object> map);
 	// usersId 0내보내기
 	public String selectUsersId(String name);
 	// String guest = service.selectUsersId(username) == null 이면 guest테이블에 추가
@@ -25,5 +25,7 @@ public interface PaymentDAO {
 	public String checkEmail(String email);
 	// 세션이 있을시 이메일이랑 이름 가져오기
 	public UsersEntity selectEmailAndName(String username);
+	// 주문내역 상품리스트
+	public List<OrdersEntity> ordersDetailGoodsList(String username);
 	
 }

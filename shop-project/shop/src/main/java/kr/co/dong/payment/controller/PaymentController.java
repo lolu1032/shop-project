@@ -52,7 +52,7 @@ public class PaymentController {
 			service.insertGuest(map);
 		}
 		service.insertOrders(map);
-		service.moveCartData(username);
+		service.moveCartData(map);
 		service.deleteOrdersList(username);
 		return "/";
 	}
@@ -76,6 +76,8 @@ public class PaymentController {
 		String username = getUserNameFromSession(session);
 		List<OrdersEntity> ordersList =  service.orderDetailList(username);
 		model.addAttribute("ordersList", ordersList);
+		ordersList = service.ordersDetailGoodsList(username);
+		model.addAttribute("ordersGoodsList", ordersList);
 		return "ordersDetail";
 	}
 	

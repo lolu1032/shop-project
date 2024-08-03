@@ -28,9 +28,9 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public int moveCartData(String name) {
+	public int moveCartData(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return dao.moveCartData(name);
+		return dao.moveCartData(map);
 	}
 
 	@Override
@@ -67,5 +67,11 @@ public class PaymentServiceImpl implements PaymentService {
 	public UsersEntity selectEmailAndName(String username) {
 		// TODO Auto-generated method stub
 		return dao.selectEmailAndName(username);
+	}
+
+	@Override
+	public List<OrdersEntity> ordersDetailGoodsList(String username) {
+		// TODO Auto-generated method stub
+		return dao.ordersDetailGoodsList(username);
 	}
 }

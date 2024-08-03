@@ -28,9 +28,9 @@ public class PaymentDAOImpl implements PaymentDAO {
 	}
 
 	@Override
-	public int moveCartData(String name) {
+	public int moveCartData(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("kr.co.dong.paymentMapper.moveCartData",name);
+		return sqlSession.insert("kr.co.dong.paymentMapper.moveCartData",map);
 	}
 
 	@Override
@@ -67,5 +67,11 @@ public class PaymentDAOImpl implements PaymentDAO {
 	public UsersEntity selectEmailAndName(String username) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("kr.co.dong.usersMapper.selectEmailAndName", username);
+	}
+
+	@Override
+	public List<OrdersEntity> ordersDetailGoodsList(String username) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.dong.paymentMapper.ordersDetailGoodsList", username);
 	}
 }

@@ -28,61 +28,47 @@
 	</insert>
 	<!-- 주문과 동시에 장바구니 데이터 삭제 -> 주문내역 테이블에 데이터 옮기기 -->
 	<insert id="moveCartData" parameterType="java.lang.String">
-		insert into ordersDetail
-		(goodsId, username)
-		select goods_id, #{username}
-		from cart
-		where username
-		= #{username}
+   insert into ordersDetail (goodsId, username, imp,purchaseDate)
+    select goods_id, #{username}, #{imp}, #{purchaseDate}
+    from cart
+    join orders on orders.username =  cart.username
+    where cart.username = #{username};
 	</insert>
 	<!-- 카트안에 있는 데이터 삭제 -->
-	<delete id="deleteOrders"
-		parameterType="kr.co.dong.domain.OrdersEntity">
+	<delete id="deleteOrders" parameterType="kr.co.dong.domain.OrdersEntity">
 		delete from cart
 		where username = #{username}
 	</delete>
 	<!-- 주문내역 리스트 -->
- 	<select id="ordersList"
-		resultType="kr.co.dong.domain.OrdersEntity">
-WITH orderDetails AS (
-    SELECT 
-        username,
-        goodsId,
-        COUNT(*) AS goodsCount
-    FROM 
-        ordersDetail
-    GROUP BY 
-        username, goodsId
-),
-rankedOrders AS (
-    SELECT 
-        orders.addr,
-        orders.name,
-        orders.merchant,
-        orders.payPrice,
-        orders.imp,
-        orders.purchaseDate,
-        goods.name AS goodsName,
-        goods.price,
-        orderDetails.goodsCount,
-        ROW_NUMBER() OVER (PARTITION BY orders.username, goods.id ORDER BY orders.purchaseDate) AS rn
-    FROM 
-        orders
-    JOIN 
-        ordersDetail ON orders.username = ordersDetail.username
-    JOIN
-        goods ON ordersDetail.goodsId = goods.id
-    JOIN
-        orderDetails ON ordersDetail.username = orderDetails.username AND ordersDetail.goodsId = orderDetails.goodsId
-        WHERE 
-        ordersDetail.username = #{username}
-)
-SELECT *
-FROM rankedOrders
-WHERE rn = 1;
+ 	<select id="ordersList" resultType="kr.co.dong.domain.OrdersEntity">
+select
+    orders.addr,
+    orders.name,
+    orders.merchant,
+    orders.payPrice,
+    orders.imp,
+    orders.purchaseDate
+from ordersdetail
+join goods on goods.id = ordersDetail.goodsId
+join orders on ordersDetail.username = orders.username
+where ordersDetail.username = #{username}
+group by
+    orders.addr,
+    orders.name,
+    orders.merchant,
+    orders.payPrice,
+    orders.imp,
+    orders.purchaseDate
 	</select> 
 	<!-- 게스트에 이메일이 있는지 확인  -->
 	<select id="selectGuestEmail" resultType="java.lang.String">
 		select distinct username from guest where email = #{email}
+	</select>
+	<select id="ordersDetailGoodsList" resultType="kr.co.dong.domain.OrdersEntity">
+		select goods.name,goods.price,count(*) as goodsCount
+			from ordersDetail
+		join goods on ordersDetail.goodsId = goods.id
+		where ordersDetail.username = #{username}
+		group by goods.name,goods.price;
 	</select>
 </mapper>
