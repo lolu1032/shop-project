@@ -28,12 +28,48 @@
 	</insert>
 	<!-- 주문과 동시에 장바구니 데이터 삭제 -> 주문내역 테이블에 데이터 옮기기 -->
 	<insert id="moveCartData" parameterType="java.lang.String">
-   insert into ordersDetail (goodsId, username, imp,purchaseDate)
-    select goods_id, #{username}, #{imp}, #{purchaseDate}
-    from cart
-    join orders on orders.username =  cart.username
-    where cart.username = #{username};
+INSERT INTO ordersDetail (name, price, colorType, goodsId, cartsId, count, imp, username, purchaseDate)
+SELECT 
+    name,
+    price,
+    colorType,
+    goodsId,
+    cartsId,
+    count,
+    imp,
+    username,
+    purchaseDate
+FROM (
+    SELECT 
+        g.name,
+        g.price,
+        g.colorType,
+        g.id AS goodsId,
+        MIN(c.id) AS cartsId,
+        COUNT(c.goods_id) AS count,
+        o.imp,
+        c.username,
+        MIN(o.purchaseDate) AS purchaseDate,
+        ROW_NUMBER() OVER (PARTITION BY g.id ORDER BY MIN(o.purchaseDate) DESC) AS rn
+    FROM 
+        cart c
+    JOIN 
+        goods g ON g.id = c.goods_id
+    JOIN 
+        orders o ON o.username = c.username
+    WHERE 
+        c.username = 'qwer1234'
+    GROUP BY 
+        g.name, g.price, g.colorType, g.id, c.username, o.imp
+) AS subquery
+WHERE rn = 1;
+
 	</insert>
+	<!-- 주문내역 상품 조회 -->
+	<select id="ordersDetailList" resultType="java.util.Map">
+		select name,price,count from ordersDetail
+		where username = #{username} and imp = #{imp}
+	</select>
 	<!-- 카트안에 있는 데이터 삭제 -->
 	<delete id="deleteOrders" parameterType="kr.co.dong.domain.OrdersEntity">
 		delete from cart
@@ -48,27 +84,11 @@ select
     orders.payPrice,
     orders.imp,
     orders.purchaseDate
-from ordersdetail
-join goods on goods.id = ordersDetail.goodsId
-join orders on ordersDetail.username = orders.username
-where ordersDetail.username = #{username}
-group by
-    orders.addr,
-    orders.name,
-    orders.merchant,
-    orders.payPrice,
-    orders.imp,
-    orders.purchaseDate
+from orders
+where orders.username = #{username}
 	</select> 
 	<!-- 게스트에 이메일이 있는지 확인  -->
 	<select id="selectGuestEmail" resultType="java.lang.String">
 		select distinct username from guest where email = #{email}
-	</select>
-	<select id="ordersDetailGoodsList" resultType="kr.co.dong.domain.OrdersEntity">
-		select goods.name,goods.price,count(*) as goodsCount,imp
-			from ordersDetail
-		join goods on ordersDetail.goodsId = goods.id
-		where ordersDetail.imp = #{imp}
-		group by goods.name,goods.price,imp;
 	</select>
 </mapper>

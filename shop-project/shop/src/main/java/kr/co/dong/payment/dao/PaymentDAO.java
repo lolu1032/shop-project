@@ -3,6 +3,8 @@ package kr.co.dong.payment.dao;
 import java.util.List;
 import java.util.Map;
 
+import kr.co.dong.domain.GoodsEntity;
+import kr.co.dong.domain.OrdersDetailEntity;
 import kr.co.dong.domain.OrdersEntity;
 import kr.co.dong.domain.UsersEntity;
 
@@ -25,7 +27,6 @@ public interface PaymentDAO {
 	public String checkEmail(String email);
 	// 세션이 있을시 이메일이랑 이름 가져오기
 	public UsersEntity selectEmailAndName(String username);
-	// 주문내역 상품리스트
-	public List<OrdersEntity> ordersDetailGoodsList(String imp);
-	
+	// 주문내역 리스트
+	public List<OrdersDetailEntity> a(Map<String, Object> map);
 }

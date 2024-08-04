@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.co.dong.domain.GoodsEntity;
+import kr.co.dong.domain.OrdersDetailEntity;
 import kr.co.dong.domain.OrdersEntity;
 import kr.co.dong.domain.UsersEntity;
 import kr.co.dong.payment.service.PaymentService;
@@ -77,17 +79,20 @@ public class PaymentController {
 	    List<OrdersEntity> ordersList = service.orderDetailList(username);
 	    model.addAttribute("ordersList", ordersList);
 
-	    // 주문별 상품 목록을 맵에 저장
-	    // 이친구 알아내기
-	    Map<String, List<OrdersEntity>> ordersGoodsMap = new HashMap<String, List<OrdersEntity>>();
-	    for (OrdersEntity order : ordersList) {
-	        List<OrdersEntity> goodsList = service.ordersDetailGoodsList(order.getImp());
-	        ordersGoodsMap.put(order.getImp(), goodsList);
-	    }
-	    model.addAttribute("ordersGoodsMap", ordersGoodsMap);
+	    Map<String, List<OrdersDetailEntity>> ordersDetailMap = new HashMap<String, List<OrdersDetailEntity>>();
 
+	    for (OrdersEntity order : ordersList) {
+	        Map<String, Object> paramMap = new HashMap<String, Object>();
+	        paramMap.put("username", username);
+	        paramMap.put("imp", order.getImp());
+	        System.out.println(order.getImp());
+	        List<OrdersDetailEntity> orderDetails = service.a(paramMap);
+	        ordersDetailMap.put(order.getImp(), orderDetails);
+	    }
+	    model.addAttribute("ordersDetailMap", ordersDetailMap); 
 	    return "ordersDetail";
 	}
+
 
 	
 	@GetMapping(value="nonMemberOrdersDetail")

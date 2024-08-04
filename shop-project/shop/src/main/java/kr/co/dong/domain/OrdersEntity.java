@@ -11,10 +11,6 @@ public class OrdersEntity {
 	private String purchaseDate; // 주문날짜
 	private int goodsCount; // 수량
 	
-	// goods테이블
-	private String goodsName;
-	private int price;
-	
 	
 	public int getGoodsCount() {
 		return goodsCount;
@@ -27,18 +23,6 @@ public class OrdersEntity {
 	}
 	public void setMerchant(String merchant) {
 		this.merchant = merchant;
-	}
-	public String getGoodsName() {
-		return goodsName;
-	}
-	public void setGoodsName(String goodsName) {
-		this.goodsName = goodsName;
-	}
-	public int getPrice() {
-		return price;
-	}
-	public void setPrice(int price) {
-		this.price = price;
 	}
 	public String getPurchaseDate() {
 		return purchaseDate;
