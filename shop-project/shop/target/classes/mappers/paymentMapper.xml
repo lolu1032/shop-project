@@ -58,7 +58,7 @@ FROM (
     JOIN 
         orders o ON o.username = c.username
     WHERE 
-        c.username = 'qwer1234'
+        c.username = #{username}
     GROUP BY 
         g.name, g.price, g.colorType, g.id, c.username, o.imp
 ) AS subquery

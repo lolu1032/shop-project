@@ -97,6 +97,7 @@ public class PaymentController {
 	
 	@GetMapping(value="nonMemberOrdersDetail")
 	public String nonMemberOrdersDetail() {
+		
 		return "nonMemberOrdersDetail";
 	}
 	@PostMapping(value = "nonMemberOrdersDetail")
@@ -108,7 +109,19 @@ public class PaymentController {
 			return "nonMemberOrdersDetail";
 		}else {
 			List<OrdersEntity> ordersList = service.orderDetailList(username);
-			model.addAttribute("ordersList", ordersList);
+		    model.addAttribute("ordersList", ordersList);
+
+		    Map<String, List<OrdersDetailEntity>> ordersDetailMap = new HashMap<String, List<OrdersDetailEntity>>();
+
+		    for (OrdersEntity order : ordersList) {
+		        Map<String, Object> paramMap = new HashMap<String, Object>();
+		        paramMap.put("username", username);
+		        paramMap.put("imp", order.getImp());
+		        System.out.println(order.getImp());
+		        List<OrdersDetailEntity> orderDetails = service.a(paramMap);
+		        ordersDetailMap.put(order.getImp(), orderDetails);
+		    }
+		    model.addAttribute("ordersDetailMap", ordersDetailMap);
 			return "ordersDetail";
 		}
 	}
