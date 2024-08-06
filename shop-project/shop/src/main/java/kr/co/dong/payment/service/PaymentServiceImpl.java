@@ -6,10 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.dong.domain.GoodsEntity;
-import kr.co.dong.domain.OrdersDetailEntity;
-import kr.co.dong.domain.OrdersEntity;
-import kr.co.dong.domain.UsersEntity;
+import kr.co.dong.domain.GoodsDTO;
+import kr.co.dong.domain.OrdersDetailDTO;
+import kr.co.dong.domain.OrdersDTO;
+import kr.co.dong.domain.UsersDTO;
 import kr.co.dong.payment.dao.PaymentDAO;
 
 @Service
@@ -48,7 +48,7 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public List<OrdersEntity> orderDetailList(String name) {
+	public List<OrdersDTO> orderDetailList(String name) {
 		// TODO Auto-generated method stub
 		return dao.orderDetailList(name);
 	}
@@ -66,13 +66,13 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public UsersEntity selectEmailAndName(String username) {
+	public UsersDTO selectEmailAndName(String username) {
 		// TODO Auto-generated method stub
 		return dao.selectEmailAndName(username);
 	}
 
 	@Override
-	public List<OrdersDetailEntity> a(Map<String, Object> map) {
+	public List<OrdersDetailDTO> a(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return dao.a(map);
 	}

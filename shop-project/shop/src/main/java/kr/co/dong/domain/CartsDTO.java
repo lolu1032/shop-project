@@ -1,6 +1,6 @@
 package kr.co.dong.domain;
 
-public class CartsEntity {
+public class CartsDTO {
 	private int id;
 
 	// 카트 상품아이디 외래키

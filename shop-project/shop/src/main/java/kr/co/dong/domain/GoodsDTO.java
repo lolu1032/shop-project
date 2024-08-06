@@ -1,6 +1,6 @@
 package kr.co.dong.domain;
 
-public class GoodsEntity {
+public class GoodsDTO {
 	private String name; // ¿Ê ÀÌ¸§
 	private int price; // °¡°Ý 
 	private String colorType; // ¿Ê »ö

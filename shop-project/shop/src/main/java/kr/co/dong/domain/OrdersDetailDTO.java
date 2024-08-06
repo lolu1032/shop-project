@@ -1,6 +1,6 @@
 package kr.co.dong.domain;
 
-public class OrdersDetailEntity {
+public class OrdersDetailDTO {
 	private String name;
 	private String price;
 	private String colorType;

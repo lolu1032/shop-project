@@ -23,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mysql.cj.Session;
 
-import kr.co.dong.domain.UsersEntity;
+import kr.co.dong.domain.UsersDTO;
 import kr.co.dong.users.service.UsersService;
 
 @Controller
@@ -48,7 +48,7 @@ public class UsersController {
 		model.addAttribute("phone", phone);
 		model.addAttribute("email", email);
 		
-		UsersEntity usersEntity = new UsersEntity();
+		UsersDTO usersEntity = new UsersDTO();
 
 		if (!Pattern.matches("^[a-zA-Z]{1}[a-zA-Z0-9_]{4,11}$", id)) {
 			model.addAttribute("loginError", "아이디는 5자 이상 12자 이하, 영문자로 시작해야 하며 영문자, 숫자, 밑줄(_)만 사용할 수 있습니다.");
@@ -99,11 +99,11 @@ public class UsersController {
 		if (id == null || pw == null) {
 			return "login";
 		}
-		UsersEntity ue = new UsersEntity();
+		UsersDTO ue = new UsersDTO();
 		ue.setLogin(id);
 		ue.setPw(pw);
 
-		UsersEntity sucess = service.success(ue);
+		UsersDTO sucess = service.success(ue);
 		if (sucess == null) {
 			model.addAttribute("error", "아이디 또는 비밀번호가 틀렸습니다.");
 			return "login";

@@ -1,6 +1,6 @@
 package kr.co.dong.domain;
 
-public class OrdersEntity {
+public class OrdersDTO {
 	private String addr; // 주소
 	private String name; // 이름
 	private String merchant;// 주문번호

@@ -1,6 +1,6 @@
 package kr.co.dong.domain;
 
-public class ImgsEntity {
+public class ImgsDTO {
 	private String path;
 
 	public String getPath() {

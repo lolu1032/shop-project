@@ -7,10 +7,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kr.co.dong.domain.GoodsEntity;
-import kr.co.dong.domain.OrdersDetailEntity;
-import kr.co.dong.domain.OrdersEntity;
-import kr.co.dong.domain.UsersEntity;
+import kr.co.dong.domain.GoodsDTO;
+import kr.co.dong.domain.OrdersDetailDTO;
+import kr.co.dong.domain.OrdersDTO;
+import kr.co.dong.domain.UsersDTO;
 
 @Repository
 public class PaymentDAOImpl implements PaymentDAO {
@@ -48,7 +48,7 @@ public class PaymentDAOImpl implements PaymentDAO {
 	}
 
 	@Override
-	public List<OrdersEntity> orderDetailList(String name) {
+	public List<OrdersDTO> orderDetailList(String name) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kr.co.dong.paymentMapper.ordersList", name);
 	}
@@ -66,13 +66,13 @@ public class PaymentDAOImpl implements PaymentDAO {
 	}
 
 	@Override
-	public UsersEntity selectEmailAndName(String username) {
+	public UsersDTO selectEmailAndName(String username) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("kr.co.dong.usersMapper.selectEmailAndName", username);
 	}
 
 	@Override
-	public List<OrdersDetailEntity> a(Map<String, Object> map) {
+	public List<OrdersDetailDTO> a(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kr.co.dong.paymentMapper.ordersDetailList",map);
 	}

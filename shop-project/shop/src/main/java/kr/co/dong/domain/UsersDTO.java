@@ -1,6 +1,6 @@
 package kr.co.dong.domain;
 
-public class UsersEntity {
+public class UsersDTO {
 	private String login;
 	private String pw;
 	private String name;

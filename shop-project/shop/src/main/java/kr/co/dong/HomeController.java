@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.dong.domain.GoodsEntity;
+import kr.co.dong.domain.GoodsDTO;
 import kr.co.dong.goods.service.GoodsService;
 
 /**
@@ -34,7 +34,7 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(Locale locale, Model model) {
 		
-		List<GoodsEntity> list = service.goodsList();
+		List<GoodsDTO> list = service.goodsList();
 		Collections.shuffle(list); // 리스트를 랜덤하게 섞음
 //		System.out.println("Goods List: " + list); // 디버깅용 로그
 		ModelAndView mv = new ModelAndView("main");

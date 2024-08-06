@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import kr.co.dong.domain.CartsEntity;
-import kr.co.dong.domain.GoodsEntity;
-import kr.co.dong.domain.ImgsEntity;
+import kr.co.dong.domain.CartsDTO;
+import kr.co.dong.domain.GoodsDTO;
+import kr.co.dong.domain.ImgsDTO;
 import kr.co.dong.goods.service.GoodsService;
 
 @Controller
@@ -30,16 +30,16 @@ public class GoodsController {
 
 	@GetMapping(value = "goods/{id}")
 	public String goods(@PathVariable("id") String id, Model model) {
-		GoodsEntity ge = service.goodsPage(id);
+		GoodsDTO ge = service.goodsPage(id);
 		model.addAttribute("list", ge);
-		List<ImgsEntity> imgs = service.imgsList(id);
+		List<ImgsDTO> imgs = service.imgsList(id);
 		model.addAttribute("imgs", imgs);
 		return "goods";
 	}
 
 	@GetMapping(value = {"outer","top","pants"})
 	public ModelAndView outer() {
-		List<GoodsEntity> list = service.goodsList();
+		List<GoodsDTO> list = service.goodsList();
 		Collections.shuffle(list); // 리스트를 랜덤하게 섞음
 //		System.out.println("Goods List: " + list); // 디버깅용 로그
 		ModelAndView mv = new ModelAndView();
@@ -48,7 +48,7 @@ public class GoodsController {
 	}
 
 	@GetMapping(value = { "cart", "payment" })
-	public List<GoodsEntity> cart(HttpServletRequest request, Model model) {
+	public List<GoodsDTO> cart(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession(false);
 		
 		Map<String, Object> carts = new HashMap<String, Object>();
@@ -64,7 +64,7 @@ public class GoodsController {
 		log.put("oldUsername", oldUsername);			
 		log.put("username", username);
 		service.updateCartsUsername(log);
-		List<GoodsEntity> cartList = service.cartsList(username);
+		List<GoodsDTO> cartList = service.cartsList(username);
 		model.addAttribute("usernames", username);
 		model.addAttribute("cart", cartList);
 		return cartList;
@@ -85,7 +85,7 @@ public class GoodsController {
 		
 		// 서비스 호출
 		service.insertCart(carts);
-		List<GoodsEntity> cartList = service.cartsList(username);
+		List<GoodsDTO> cartList = service.cartsList(username);
 		model.addAttribute("usernames", username);
 		model.addAttribute("cart", cartList);
 		model.addAttribute("goodsId", goodsId);

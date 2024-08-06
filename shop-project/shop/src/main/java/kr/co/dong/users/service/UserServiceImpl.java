@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.co.dong.domain.UsersEntity;
+import kr.co.dong.domain.UsersDTO;
 import kr.co.dong.users.dao.UsersDAO;
 
 @Service
@@ -17,7 +17,7 @@ public class UserServiceImpl implements UsersService{
 	private UsersDAO dao;
 	
 	@Override
-	public int insertUsers(UsersEntity ue) {
+	public int insertUsers(UsersDTO ue) {
 		return dao.insertUsers(ue);
 	}
 	// 커스텀인셉션으로 컨트롤에 있는 오류메시지를 관리 <-- 알아보기
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UsersService{
 	}
 
 	@Override
-	public UsersEntity success(UsersEntity ue) {
+	public UsersDTO success(UsersDTO ue) {
 		return  dao.success(ue);
 	}
 	@Override

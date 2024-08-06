@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import kr.co.dong.domain.UsersEntity;
+import kr.co.dong.domain.UsersDTO;
 
 @Repository
 public class UserDAOImpl implements UsersDAO{
@@ -17,7 +17,7 @@ public class UserDAOImpl implements UsersDAO{
 	private SqlSession sqlSession;
 
 	@Override
-	public int insertUsers(UsersEntity ue) {
+	public int insertUsers(UsersDTO ue) {
 		// TODO Auto-generated method stub
 		return sqlSession.insert("kr.co.dong.usersMapper.insertUsers",ue);
 	}
@@ -28,7 +28,7 @@ public class UserDAOImpl implements UsersDAO{
 	}
 
 	@Override
-	public UsersEntity success(UsersEntity ue) {
+	public UsersDTO success(UsersDTO ue) {
 		Map<String, Object> login = new HashMap<String, Object>();
 		login.put("login", ue.getLogin());
 		login.put("pw",ue.getPw());

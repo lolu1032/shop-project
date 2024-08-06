@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.co.dong.domain.GoodsEntity;
-import kr.co.dong.domain.OrdersDetailEntity;
-import kr.co.dong.domain.OrdersEntity;
-import kr.co.dong.domain.UsersEntity;
+import kr.co.dong.domain.GoodsDTO;
+import kr.co.dong.domain.OrdersDetailDTO;
+import kr.co.dong.domain.OrdersDTO;
+import kr.co.dong.domain.UsersDTO;
 import kr.co.dong.payment.service.PaymentService;
 @Controller
 public class PaymentController {
@@ -76,17 +76,17 @@ public class PaymentController {
 	public String ordersDetail(HttpServletRequest request, Model model) {
 	    HttpSession session = request.getSession(false);
 	    String username = getUserNameFromSession(session);
-	    List<OrdersEntity> ordersList = service.orderDetailList(username);
+	    List<OrdersDTO> ordersList = service.orderDetailList(username);
 	    model.addAttribute("ordersList", ordersList);
 
-	    Map<String, List<OrdersDetailEntity>> ordersDetailMap = new HashMap<String, List<OrdersDetailEntity>>();
+	    Map<String, List<OrdersDetailDTO>> ordersDetailMap = new HashMap<String, List<OrdersDetailDTO>>();
 
-	    for (OrdersEntity order : ordersList) {
+	    for (OrdersDTO order : ordersList) {
 	        Map<String, Object> paramMap = new HashMap<String, Object>();
 	        paramMap.put("username", username);
 	        paramMap.put("imp", order.getImp());
 	        System.out.println(order.getImp());
-	        List<OrdersDetailEntity> orderDetails = service.a(paramMap);
+	        List<OrdersDetailDTO> orderDetails = service.a(paramMap);
 	        ordersDetailMap.put(order.getImp(), orderDetails);
 	    }
 	    model.addAttribute("ordersDetailMap", ordersDetailMap); 
@@ -108,17 +108,17 @@ public class PaymentController {
 			model.addAttribute("error", "이메일이 존재하지않습니다.");
 			return "nonMemberOrdersDetail";
 		}else {
-			List<OrdersEntity> ordersList = service.orderDetailList(username);
+			List<OrdersDTO> ordersList = service.orderDetailList(username);
 		    model.addAttribute("ordersList", ordersList);
 
-		    Map<String, List<OrdersDetailEntity>> ordersDetailMap = new HashMap<String, List<OrdersDetailEntity>>();
+		    Map<String, List<OrdersDetailDTO>> ordersDetailMap = new HashMap<String, List<OrdersDetailDTO>>();
 
-		    for (OrdersEntity order : ordersList) {
+		    for (OrdersDTO order : ordersList) {
 		        Map<String, Object> paramMap = new HashMap<String, Object>();
 		        paramMap.put("username", username);
 		        paramMap.put("imp", order.getImp());
 		        System.out.println(order.getImp());
-		        List<OrdersDetailEntity> orderDetails = service.a(paramMap);
+		        List<OrdersDetailDTO> orderDetails = service.a(paramMap);
 		        ordersDetailMap.put(order.getImp(), orderDetails);
 		    }
 		    model.addAttribute("ordersDetailMap", ordersDetailMap);
