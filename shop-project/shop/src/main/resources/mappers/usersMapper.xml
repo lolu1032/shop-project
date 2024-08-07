@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dong.usersMapper">
-	<insert id="insertUsers" parameterType="kr.co.dong.domain.UsersEntity">
+	<insert id="insertUsers" parameterType="kr.co.dong.domain.UsersDTO">
 		insert into users(login,pw,name,number,email,joinDay) 
 		values (#{login},#{pw},#{name},#{number},#{email},now())
 	</insert>
@@ -15,7 +15,7 @@
 		where login = #{login}
 	</select>
 	
-	<select id="sucess" resultType="kr.co.dong.domain.UsersEntity">
+	<select id="sucess" resultType="kr.co.dong.domain.UsersDTO">
 		select login,pw,name,email,number from users
 		where login = #{login} and pw = #{pw}
 	</select>
