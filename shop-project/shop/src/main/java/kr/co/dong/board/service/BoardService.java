@@ -1,5 +1,8 @@
 package kr.co.dong.board.service;
 
-public interface BoardService {
+import java.util.List;
 
+import kr.co.dong.domain.NoticeDTO;
+
+public interface BoardService {
 }

@@ -1,5 +1,8 @@
 package kr.co.dong.board.dao;
 
-public interface BoardDAO {
+import java.util.List;
 
+import kr.co.dong.domain.NoticeDTO;
+
+public interface BoardDAO {
 }

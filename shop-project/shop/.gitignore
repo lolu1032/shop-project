@@ -1,9 +1,39 @@
-# Created by https://www.gitignore.io/api/git,java,maven,windows,eclipse
-# Edit at https://www.gitignore.io/?templates=git,java,maven,windows,eclipse
+# Eclipse
+.metadata
+*.tmp
+*.bak
+*.swp
+*~.nib
+.localhistory
 
-### Eclipse ###
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
 
-log4j.xml
-mybatis-config.xml
-servlet-context.xml
-root-context.xml
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Git
+*~
+*.swp
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Specific configuration files to ignore

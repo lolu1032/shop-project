@@ -97,7 +97,7 @@
 					</ul>
 					<div
 						class="xans-element- xans-layout xans-layout-boardinfo top_board">
-						<a href="" class="xans-record-">공지사항</a> <a href=""
+						<a href="${contextPath }/noticeBoard" class="xans-record-">공지사항</a> <a href=""
 							class="xans-record-">이벤트</a> <a href="" class="xans-record-">자주묻는
 							질문</a> <a href="" class="xans-record-">리얼구매후기</a>
 					</div>

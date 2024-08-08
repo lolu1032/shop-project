@@ -30,14 +30,16 @@
                         <th scope="col">날짜</th>
                     </tr>
                 </thead>
+                <c:forEach var="notice" items="${notice }">
                 <tbody>
-                    <tr>
-                        <th scope="row" class="boardId">1</th>
-                        <td class="boardName">Mark</td>
-                        <td class="boardContent">21333333333312312321312132132</td>
-                        <td class="boardDate">@mdo</td>
-                    </tr>
-                </tbody>
+                    	<tr>	
+                    	    <th scope="row" class="boardId">${notice.id}</th>
+                	        <td class="boardName"></td>
+            	            <td class="boardContent">${notice.content }</td>
+        	                <td class="boardDate">${notice.createDay }</td>
+    	                </tr>
+	                </tbody>
+                </c:forEach>
             </table>
             <button class="boardWrite">글쓰기</button>
         </div>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.3.xsd">
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- DB연결전에 아래에 있는 Namespaces를 눌러서 context부터 mybabis까지 체크박스 체크해야함 -->
+	<!-- 그리고 아래 형태에 맞게 작성해줘야함 -->
+<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="dataSourceSpied" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/shop"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="0000"></property>
+	</bean>	
+<!-- db Log추가 -->
+    <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource"> 
+        <constructor-arg ref="dataSourceSpied" /> 
+        <property name="logFormatter"> 
+            <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter"> 
+                <property name="loggingType" value="MULTI_LINE" /> 
+                <property name="sqlPrefix" value="SQL : "/> 
+            </bean> 
+        </property> 
+    </bean> 
+	<!-- 이친구는 마이바티스에서 매핑할수있게 도와주는 친구다 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"
+			value="classpath:/mybatis-config.xml"></property>
+		<property name="mapperLocations"
+			value="classpath:mappers/**/*.xml"></property>
+	</bean>
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate"
+		destroy-method="clearCache">
+		<constructor-arg name="sqlSessionFactory"
+			ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+
+</beans>
