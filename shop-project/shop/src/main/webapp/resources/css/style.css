@@ -776,17 +776,32 @@ table th {
 }
 /* 테이블 스타일 */
 .boardTitle {
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	height: 200px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .boardTitle .notice {
-    font-size: 32px;
-    font-weight: 800;
+	font-size: 32px;
+	font-weight: 800;
 }
-.board-container{
+
+.board-container {
 	width: 80%;
 	margin: 0 auto;
+}
+
+.boardWrite {
+	width: 100px;
+	height: 40px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 500;
+	display: flex;
+	margin-left:auto;
+	justify-content : center; 
+	align-items : center;
+	transition: background-color 0.3s;
 }

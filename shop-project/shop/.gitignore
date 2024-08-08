@@ -1,0 +1,9 @@
+# Created by https://www.gitignore.io/api/git,java,maven,windows,eclipse
+# Edit at https://www.gitignore.io/?templates=git,java,maven,windows,eclipse
+
+### Eclipse ###
+
+log4j.xml
+mybatis-config.xml
+servlet-context.xml
+root-context.xml

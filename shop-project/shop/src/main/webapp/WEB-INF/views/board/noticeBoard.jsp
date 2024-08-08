@@ -39,6 +39,7 @@
                     </tr>
                 </tbody>
             </table>
+            <button class="boardWrite">글쓰기</button>
         </div>
     </div>
 	</div>
