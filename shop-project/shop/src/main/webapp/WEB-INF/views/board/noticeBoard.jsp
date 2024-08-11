@@ -18,7 +18,7 @@
 			</c:otherwise>
 		</c:choose>
 		 <div class="board-container">
-		 	<div class="boardTitle">
+		 	<div class="noticeTitle">
 		 		<div class="notice">공지사항</div>
 		 	</div>
             <table class="table table-striped">
@@ -34,8 +34,8 @@
                 <tbody>
                     	<tr>	
                     	    <th scope="row" class="boardId">${notice.id}</th>
-                	        <td class="boardName"></td>
-            	            <td class="boardContent">${notice.content }</td>
+                	        <td class="boardName">sldoog234</td>
+            	            <td class="boardTitle">${notice.content}</td>
         	                <td class="boardDate">${notice.createDay }</td>
     	                </tr>
 	                </tbody>

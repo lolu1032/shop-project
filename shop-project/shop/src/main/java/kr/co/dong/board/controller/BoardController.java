@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.mysql.cj.protocol.x.Notice;
+
 import kr.co.dong.board.service.BoardService;
 import kr.co.dong.domain.NoticeDTO;
 @Controller
@@ -16,6 +18,9 @@ public class BoardController {
 	
 	@GetMapping("noticeBoard")
 	public String notice(Model model) {
-		return "board/noticeBoard";
+		
+		List<NoticeDTO> notice = service.notice();
+		model.addAttribute("notice", notice);
+		return "/board/noticeBoard";
 	}
 }

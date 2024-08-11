@@ -13,4 +13,10 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Autowired
 	private SqlSession sqlSession;
+
+	@Override
+	public List<NoticeDTO> notice() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("kr.co.dong.boardMapper.noticeBoard");
+	}
 }

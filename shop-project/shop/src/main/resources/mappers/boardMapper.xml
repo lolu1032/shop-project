@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.dong.boardMapper">
-	<select id="noticeBoard">
-		select title,content,createDay from notice
+	<select id="noticeBoard" resultType="kr.co.dong.domain.NoticeDTO">
+		select id,title,content,createDay from notice
 	</select>
 </mapper>

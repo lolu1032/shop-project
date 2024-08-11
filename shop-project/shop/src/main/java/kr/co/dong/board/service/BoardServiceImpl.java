@@ -13,4 +13,10 @@ public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
 	private BoardDAO dao;
+
+	@Override
+	public List<NoticeDTO> notice() {
+		// TODO Auto-generated method stub
+		return dao.notice();
+	}
 }

@@ -775,14 +775,14 @@ table th {
 	object-fit: cover;
 }
 /* 테이블 스타일 */
-.boardTitle {
+.noticeTitle {
 	height: 200px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
 
-.boardTitle .notice {
+.noticeTitle .notice {
 	font-size: 32px;
 	font-weight: 800;
 }
@@ -804,4 +804,20 @@ table th {
 	justify-content : center; 
 	align-items : center;
 	transition: background-color 0.3s;
+}
+.boardId {
+	width: 50px;
+}
+.boardName {
+	width: 120px;
+	max-width: 150px;
+}
+.boardTitle {
+	white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+.boardDate {
+	width: 220px;
 }
