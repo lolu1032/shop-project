@@ -35,7 +35,7 @@
                     	<tr>	
                     	    <th scope="row" class="boardId">${notice.id}</th>
                 	        <td class="boardName">sldoog234</td>
-            	            <td class="boardTitle">${notice.content}</td>
+            	            <td class="boardTitle"><a href="noticePage/${notice.id}">${notice.title}</a></td>
         	                <td class="boardDate">${notice.createDay }</td>
     	                </tr>
 	                </tbody>

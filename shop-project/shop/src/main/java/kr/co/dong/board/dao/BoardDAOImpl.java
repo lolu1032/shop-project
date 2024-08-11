@@ -19,4 +19,10 @@ public class BoardDAOImpl implements BoardDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kr.co.dong.boardMapper.noticeBoard");
 	}
+
+	@Override
+	public NoticeDTO detailNotice(int id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kr.co.dong.boardMapper.detailNotice", id);
+	}
 }

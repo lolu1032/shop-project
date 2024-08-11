@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.mysql.cj.protocol.x.Notice;
 
@@ -22,5 +23,12 @@ public class BoardController {
 		List<NoticeDTO> notice = service.notice();
 		model.addAttribute("notice", notice);
 		return "/board/noticeBoard";
+	}
+	
+	@GetMapping("noticePage/{id}")
+	public String detailNotice(@PathVariable("id") int id,Model model) {
+		NoticeDTO nd = service.detailNotice(id);
+		model.addAttribute("notice", nd);
+		return "board/detailNotice";
 	}
 }

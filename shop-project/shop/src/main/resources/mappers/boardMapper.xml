@@ -6,4 +6,7 @@
 	<select id="noticeBoard" resultType="kr.co.dong.domain.NoticeDTO">
 		select id,title,content,createDay from notice
 	</select>
+	<select id="detailNotice" resultType="kr.co.dong.domain.NoticeDTO">
+		select id,title,content,createDay from notice where id = #{id}
+	</select>
 </mapper>
