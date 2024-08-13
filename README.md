@@ -45,7 +45,7 @@ nts/assets/ace837f8-1cf3-44a4-9ae0-ba2eafbff3a4)
 ## 공지사항 (2024-08-11 공지사항 추가)
 ![공지사항](https://github.com/user-attachments/assets/0ae27176-fae0-4f28-a208-2a2146c69054)
 ![공지사항 상세페이지](https://github.com/user-attachments/assets/bc8cb11b-1f24-490c-b45b-2a4c89e3937e)
-### 프로젝트가 끝났지만 게시글도 한번쯤 만들어 보고 싶어서 만들고 있는중입니다.
+### 프로젝트가 끝났지만 게시글도 한번쯤 만들어 보고 싶어서 만들고 있는중입니다. 2차 프로젝트 시작으로 인해 중단하게되었습니다.
 
 ### 첫 시작 ERD / 최종 ERD
 <div style="display: flex; justify-content: space-between;">
